@@ -2,6 +2,7 @@ package com.vocacional.prestamoinso.Controller;
 
 
 import com.vocacional.prestamoinso.DTO.TrabajadorDTO;
+import com.vocacional.prestamoinso.DTO.LoginRequestDTO;
 import com.vocacional.prestamoinso.Entity.Trabajador;
 import com.vocacional.prestamoinso.Entity.User;
 import com.vocacional.prestamoinso.Repository.TrabajadorRepository;
@@ -41,8 +42,23 @@ public class TrabajadorController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<Map<String, Object>> login(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password,
+            @RequestBody(required = false) LoginRequestDTO body
+    ) {
         Map<String, Object> response = new HashMap<>();
+
+        if (body != null) {
+            if (username == null) username = body.getUsername();
+            if (password == null) password = body.getPassword();
+        }
+
+        if (username == null || password == null) {
+            response.put("message", "Faltan credenciales: username y password");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByUsername(username);
         if (optionalTrabajador.isPresent()) {
             Trabajador trabajador = optionalTrabajador.get();
@@ -52,17 +68,14 @@ public class TrabajadorController {
                 return ResponseEntity.badRequest().body(response);
             }
 
-
             String token = jwtUtilService.generateToken(trabajador);
 
             response.put("message", "Inicio de sesión exitoso");
             response.put("token", token);
-
-
             response.put("requiresPasswordChange", trabajador.isNeedsPasswordChange());
-
             return ResponseEntity.ok(response);
         }
+
         response.put("message", "Trabajador no registrado");
         return ResponseEntity.badRequest().body(response);
     }
