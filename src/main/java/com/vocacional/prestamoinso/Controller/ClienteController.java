@@ -31,14 +31,24 @@ public class ClienteController {
 
     @PostMapping("/registrar")
     public ResponseEntity<Cliente> registrarCliente(@RequestBody ClienteDTO registroClienteDTO) {
-        Cliente cliente;
-        // Si el cliente ya existe, no lanzamos la excepción Conflict
-        if (clienteRepository.existsByNroDocumento(registroClienteDTO.getNroDocumento())) {
-            cliente = clienteRepository.findByNroDocumento(registroClienteDTO.getNroDocumento());
-        } else {
-            cliente = clienteService.registrarCliente(registroClienteDTO);
+        try {
+            Cliente cliente;
+            // Validar que el DTO tenga el número de documento
+            if (registroClienteDTO.getNroDocumento() == null || registroClienteDTO.getNroDocumento().trim().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            
+            // Si el cliente ya existe, no lanzamos la excepción Conflict
+            if (clienteRepository.existsByNroDocumento(registroClienteDTO.getNroDocumento())) {
+                cliente = clienteRepository.findByNroDocumento(registroClienteDTO.getNroDocumento());
+            } else {
+                cliente = clienteService.registrarCliente(registroClienteDTO);
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
 

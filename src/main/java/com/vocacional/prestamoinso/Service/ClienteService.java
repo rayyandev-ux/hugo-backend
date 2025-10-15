@@ -33,6 +33,12 @@ public class ClienteService {
 
     public Cliente registrarCliente(ClienteDTO registroClienteDTO) {
         String nroDocumento = registroClienteDTO.getNroDocumento();
+        
+        // Validar que nroDocumento no sea null o vacío
+        if (nroDocumento == null || nroDocumento.trim().isEmpty()) {
+            throw new RuntimeException("El número de documento es requerido");
+        }
+        
         if (nroDocumento.length() == 11) {
             // Si es un RUC, validar con la API de SUNAT
             SunatResponseDTO datosSunat = validarRUC(registroClienteDTO.getNroDocumento());
