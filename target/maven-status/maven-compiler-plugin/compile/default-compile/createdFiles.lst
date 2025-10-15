@@ -3,6 +3,7 @@ com\vocacional\prestamoinso\Filter\JwtRequestFilter.class
 com\vocacional\prestamoinso\util\PasswordGenerator.class
 com\vocacional\prestamoinso\Config\ModelMapperConfig.class
 com\vocacional\prestamoinso\Entity\User.class
+com\vocacional\prestamoinso\Component\AdminPasswordFixer.class
 com\vocacional\prestamoinso\DTO\UserDTO.class
 com\vocacional\prestamoinso\Entity\Trabajador.class
 com\vocacional\prestamoinso\DTO\LoginRequestDTO.class
