@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
@@ -29,6 +31,92 @@ public class ClienteController {
 
     @Autowired
     private ClienteJpaService clienteJpaService;
+
+    // GET /clientes - Listar todos los clientes
+    @GetMapping
+    public ResponseEntity<List<Cliente>> getAllClientes() {
+        try {
+            List<Cliente> clientes = clienteJpaService.findAll();
+            return ResponseEntity.ok(clientes);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // GET /clientes/{id} - Obtener cliente por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getClienteById(@PathVariable Long id) {
+        try {
+            Optional<Cliente> cliente = clienteJpaService.findById(id);
+            if (cliente.isPresent()) {
+                return ResponseEntity.ok(cliente.get());
+            } else {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Cliente no encontrado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error interno del servidor");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    // PUT /clientes/{id} - Actualizar cliente
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+        try {
+            Optional<Cliente> clienteExistente = clienteJpaService.findById(id);
+            if (!clienteExistente.isPresent()) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Cliente no encontrado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
+            Cliente cliente = clienteExistente.get();
+            cliente.setNombre(clienteDTO.getNombre());
+            cliente.setApellidoPaterno(clienteDTO.getApellidoPaterno());
+            cliente.setApellidoMaterno(clienteDTO.getApellidoMaterno());
+            cliente.setNroDocumento(clienteDTO.getNroDocumento());
+            cliente.setTipoPersona(clienteDTO.getTipoPersona());
+            cliente.setNacionalidad(clienteDTO.getNacionalidad());
+            cliente.setEstado(clienteDTO.getEstado());
+            cliente.setCondicion(clienteDTO.getCondicion());
+            cliente.setDireccion(clienteDTO.getDireccion());
+            cliente.setDistrito(clienteDTO.getDistrito());
+            cliente.setProvincia(clienteDTO.getProvincia());
+            cliente.setDepartamento(clienteDTO.getDepartamento());
+
+            Cliente clienteActualizado = clienteJpaService.save(cliente);
+            return ResponseEntity.ok(clienteActualizado);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error interno del servidor");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    // DELETE /clientes/{id} - Eliminar cliente
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
+        try {
+            Optional<Cliente> cliente = clienteJpaService.findById(id);
+            if (!cliente.isPresent()) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Cliente no encontrado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
+            clienteJpaService.deleteById(id);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Cliente eliminado correctamente");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error interno del servidor");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 
     @PostMapping("/registrar")
     public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO registroClienteDTO) {
