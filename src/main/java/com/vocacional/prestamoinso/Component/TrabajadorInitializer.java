@@ -1,7 +1,7 @@
 package com.vocacional.prestamoinso.Component;
 
 import com.vocacional.prestamoinso.Entity.enums.ERole;
-import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.TrabajadorJpaService;
 import com.vocacional.prestamoinso.Service.UserSupabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class TrabajadorInitializer implements CommandLineRunner {
 
     @Autowired
-    private TrabajadorSupabaseService trabajadorSupabaseService;
+    private TrabajadorJpaService trabajadorJpaService;
 
     @Autowired
     private UserSupabaseService userSupabaseService;
@@ -37,7 +37,7 @@ public class TrabajadorInitializer implements CommandLineRunner {
             }
             
             // Verificar si ya existe un trabajador admin
-            if (!trabajadorSupabaseService.findByUsername("admin").isPresent()) {
+            if (!trabajadorJpaService.findByUsername("admin").isPresent()) {
                 // Verificar si existe en la tabla users
                 var existingUser = userSupabaseService.findByUsername("admin");
                 if (existingUser != null) {

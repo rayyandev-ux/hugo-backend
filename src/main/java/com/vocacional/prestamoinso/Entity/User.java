@@ -31,7 +31,7 @@ public class User {
     @NotBlank(message = "El correo es obligatorio")
     @Column(unique = true)
     private String email;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String password;

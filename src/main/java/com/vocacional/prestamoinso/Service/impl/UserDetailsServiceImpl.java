@@ -1,8 +1,8 @@
 package com.vocacional.prestamoinso.Service.impl;
 
 import com.vocacional.prestamoinso.Entity.enums.ERole;
-import com.vocacional.prestamoinso.Service.ClienteSupabaseService;
-import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.ClienteJpaService;
+import com.vocacional.prestamoinso.Service.TrabajadorJpaService;
 import com.vocacional.prestamoinso.Service.UserSupabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,23 +17,21 @@ import java.util.Collection;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ClienteSupabaseService clienteSupabaseService;
-    @Autowired
-    private TrabajadorSupabaseService trabajadorSupabaseService;
-    @Autowired
-    private UserSupabaseService userSupabaseService;
+    private UserJpaService userJpaService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User trabajador = userSupabaseService.findByUsernameWithPassword(username);
-        if (trabajador == null) {
-            throw new UsernameNotFoundException("Traabajador no encontrado: " + username);
+        Optional<User> userOpt = userJpaService.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            throw new UsernameNotFoundException("Usuario no encontrado: " + username);
         }
+        
+        User user = userOpt.get();
 
         return new org.springframework.security.core.userdetails.User(
-                trabajador.getUsername(),
-                trabajador.getPassword(),
-                mapRolesToAuthorities(trabajador.getRole())
+                user.getUsername(),
+                user.getPassword(),
+                mapRolesToAuthorities(user.getRole())
         );
     }
 

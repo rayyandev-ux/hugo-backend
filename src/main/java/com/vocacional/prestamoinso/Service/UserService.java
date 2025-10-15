@@ -7,7 +7,7 @@ import com.vocacional.prestamoinso.Entity.Trabajador;
 import com.vocacional.prestamoinso.Entity.User;
 import com.vocacional.prestamoinso.Entity.enums.ERole;
 import com.vocacional.prestamoinso.Mapper.TrabajadorMappper;
-import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.TrabajadorJpaService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +16,12 @@ public class UserService {
 
 
     private final PasswordEncoder passwordEncoder;
-    private final TrabajadorSupabaseService trabajadorSupabaseService;
+    private final TrabajadorJpaService trabajadorJpaService;
     private final TrabajadorMappper trabajadorMappper;
 
-    public UserService(PasswordEncoder passwordEncoder, TrabajadorSupabaseService trabajadorSupabaseService, TrabajadorMappper trabajadorMappper) {
+    public UserService(PasswordEncoder passwordEncoder, TrabajadorJpaService trabajadorJpaService, TrabajadorMappper trabajadorMappper) {
         this.passwordEncoder = passwordEncoder;
-        this.trabajadorSupabaseService = trabajadorSupabaseService;
+        this.trabajadorJpaService = trabajadorJpaService;
         this.trabajadorMappper = trabajadorMappper;
     }
 
@@ -34,7 +34,7 @@ public class UserService {
         trabajador.setEmail(trabajadorDTO.getEmail());
         trabajador.setPassword(passwordEncoder.encode(trabajadorDTO.getPassword()));
         trabajador.setRole(eRole);
-        trabajador = trabajadorSupabaseService.save(trabajador);
+        trabajador = trabajadorJpaService.save(trabajador);
         return trabajadorMappper.toDTO(trabajador);
     }
 
@@ -48,7 +48,7 @@ public class UserService {
         trabajador.setEmail(trabajadorDTO.getEmail());
         trabajador.setPassword(passwordEncoder.encode(trabajadorDTO.getPassword()));
         trabajador.setRole(eRole);
-        trabajador = trabajadorSupabaseService.save(trabajador);
+        trabajador = trabajadorJpaService.save(trabajador);
         return trabajadorMappper.toDTO(trabajador);
     }
 }

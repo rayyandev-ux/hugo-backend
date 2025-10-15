@@ -16,9 +16,9 @@ import com.vocacional.prestamoinso.Entity.Cliente;
 import com.vocacional.prestamoinso.Entity.CronogramaPagos;
 import com.vocacional.prestamoinso.Entity.Prestamo;
 import com.vocacional.prestamoinso.Mapper.ClienteMapper;
-import com.vocacional.prestamoinso.Service.ClienteSupabaseService;
-import com.vocacional.prestamoinso.Service.CronogramaPagosSupabaseService;
-import com.vocacional.prestamoinso.Service.PrestamoSupabaseService;
+import com.vocacional.prestamoinso.Service.ClienteJpaService;
+import com.vocacional.prestamoinso.Service.CronogramaPagosJpaService;
+import com.vocacional.prestamoinso.Service.PrestamoJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -37,27 +37,25 @@ import java.util.stream.Collectors;
 @Service
 public class PrestamoService {
     @Autowired
-    private ClienteSupabaseService clienteSupabaseService;
+    private ClienteJpaService clienteJpaService;
 
 
     @Autowired
-    private PrestamoSupabaseService prestamoSupabaseService;
+    private PrestamoJpaService prestamoJpaService;
 
     @Autowired
-    private CronogramaPagosSupabaseService cronogramaPagosSupabaseService;
+    private CronogramaPagosJpaService cronogramaPagosJpaService;
 
     public List<Prestamo> obtenerPrestamosPorEstado(String estado) {
-        return prestamoSupabaseService.findByEstado(estado);
+        return prestamoJpaService.findByEstado(estado);
     }
 
-    public List<Prestamo> listarPrestamosPendientes() {
-        // Obtener todos los préstamos
-        List<Prestamo> prestamos = prestamoSupabaseService.findAll();
-        List<Prestamo> prestamosConPagosPendientes = new ArrayList<>();
+    public List<PrestamoConPagosDTO> obtenerPrestamosConPagos() {
+        List<Prestamo> prestamos = prestamoJpaService.findAll();
+        List<PrestamoConPagosDTO> prestamosConPagos = new ArrayList<>();
 
         for (Prestamo prestamo : prestamos) {
-            // Filtrar los pagos pendientes del préstamo
-            List<CronogramaPagos> pagosPendientes = cronogramaPagosSupabaseService.findByPrestamoIdAndEstadoOrderByFechaPagoAsc(prestamo.getId(), "Pendiente");
+            List<CronogramaPagos> pagosPendientes = cronogramaPagosJpaService.findByPrestamoIdAndEstadoOrderByFechaPagoAsc(prestamo.getId(), "Pendiente");
 
 
             if (!pagosPendientes.isEmpty()) {
@@ -71,33 +69,33 @@ public class PrestamoService {
 
 
     public void eliminarPrestamo(Long id) {
-        Prestamo prestamo = prestamoSupabaseService.findById(id)
-                .orElseThrow(() -> new RuntimeException("Préstamo no encontrado"));
-        prestamoSupabaseService.delete(prestamo);
+        Prestamo prestamo = prestamoJpaService.findById(id)
+                .orElseThrow(() -> new Exception("Préstamo no encontrado con id: " + id));
+        prestamoJpaService.delete(prestamo);
     }
 
 
     public void crearPrestamo(String clienteId, double monto, int plazo, double interes) {
         // Obtener cliente
-        Cliente cliente = clienteSupabaseService.findByNroDocumento(clienteId);
+        Cliente cliente = clienteJpaService.findByNroDocumento(clienteId);
 
         // Obtener el total de préstamos activos del cliente en el mes actual
         YearMonth ahora = YearMonth.now();
-        Double totalPrestamosMes = prestamoSupabaseService.obtenerTotalPrestamosMensuales(cliente.getId(), ahora.getYear(), ahora.getMonthValue());
+        Double totalPrestamosMes = prestamoJpaService.obtenerTotalPrestamosMensuales(cliente.getId(), ahora.getYear(), ahora.getMonthValue());
 
         if (totalPrestamosMes == null) {
             totalPrestamosMes = 0.0; // Valor predeterminado si no hay datos
         }
 
         // Obtener todos los préstamos activos del cliente (sin importar el mes, solo los que están activos)
-        List<Prestamo> prestamosActivos = prestamoSupabaseService.findByClienteAndEstado(cliente, "Activo");
+        List<Prestamo> prestamosActivos = prestamoJpaService.findByClienteAndEstado(cliente, "Activo");
 
         double saldoPendienteCliente = 0.0;
 
         // Calcular el saldo pendiente total de los préstamos activos (restando los pagos realizados)
         for (Prestamo prestamo : prestamosActivos) {
             // Obtener el total de pagos realizados en este préstamo (solo pagos realizados)
-            Double pagosRealizados = cronogramaPagosSupabaseService.obtenerTotalPagosPrestamo(prestamo.getId());
+            Double pagosRealizados = cronogramaPagosJpaService.obtenerTotalPagosPrestamo(prestamo.getId());
 
             if (pagosRealizados == null) {
                 pagosRealizados = 0.0;
@@ -136,7 +134,7 @@ public class PrestamoService {
         prestamo.setCronogramaPagos(cronograma);
 
         // Guardar el préstamo
-        prestamoSupabaseService.save(prestamo);
+        prestamoJpaService.save(prestamo);
     }
 
 
@@ -149,9 +147,9 @@ public class PrestamoService {
 
     public byte[] generarPdf(Long prestamoId) throws IOException {
         // Obtener información del préstamo
-        Prestamo prestamo = prestamoSupabaseService.findById(prestamoId)
+        Prestamo prestamo = prestamoJpaService.findById(prestamoId)
                 .orElseThrow(() -> new RuntimeException("Préstamo no encontrado"));
-        List<CronogramaPagos> cronograma = cronogramaPagosSupabaseService.findByPrestamoId(prestamoId);
+        List<CronogramaPagos> cronograma = cronogramaPagosJpaService.findByPrestamoId(prestamoId);
 
         // Configurar el documento PDF
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -296,7 +294,7 @@ public class PrestamoService {
                 // Actualizar el monto de la cuota con el interés
                 pago.setMontoCuota(nuevoMontoCuota);
                 // Guardar la cuota actualizada
-                cronogramaPagosSupabaseService.save(pago);
+                cronogramaPagosJpaService.save(pago);
             }
         }
         return cronograma;
@@ -306,7 +304,7 @@ public class PrestamoService {
 
     public List<Prestamo> findAllByOrderByFechaCreacionDesc() {
         // Obtener todos los préstamos ordenados por fecha de creación
-        List<Prestamo> prestamos = prestamoSupabaseService.findAllByOrderByFechaCreacionDesc();
+        List<Prestamo> prestamos = prestamoJpaService.findAllByOrderByFechaCreacionDesc();
 
         // Actualizar el estado de las cuotas de cada préstamo
         for (Prestamo prestamo : prestamos) {
@@ -334,7 +332,7 @@ public class PrestamoService {
                 pago.setMontoCuota(pago.getMontoCuota() + interesAcumulado);
 
                 // Guardar los cambios
-                cronogramaPagosSupabaseService.save(pago);
+                cronogramaPagosJpaService.save(pago);
             }
         }
     }
@@ -343,12 +341,12 @@ public class PrestamoService {
 
 
     public void marcarComoPagado(Long id) {
-        CronogramaPagos pago = cronogramaPagosSupabaseService.findById(id)
+        CronogramaPagos pago = cronogramaPagosJpaService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
 
         // Marcar la cuota como pagada
         pago.setEstado("Pagado");
-        cronogramaPagosSupabaseService.save(pago);
+        cronogramaPagosJpaService.save(pago);
 
         // Verificar si todas las cuotas del préstamo están pagadas
         Prestamo prestamo = pago.getPrestamo(); // Suponiendo que hay una relación @ManyToOne entre CronogramaPagos y Prestamo
@@ -360,12 +358,12 @@ public class PrestamoService {
         if (todasPagadas) {
             // Actualizar el estado del préstamo a "Pagada"
             prestamo.setEstado("Pagado");
-            prestamoSupabaseService.save(prestamo);
+            prestamoJpaService.save(prestamo);
         }
     }
 
     public CronogramaPagos obtenerPagoPorId(Long id) {
-        return cronogramaPagosSupabaseService.findById(id)
+        return cronogramaPagosJpaService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
     }
 
@@ -496,7 +494,7 @@ public class PrestamoService {
     }
 
     public List<Prestamo> findByClienteNroDocumento(String nro){
-        return prestamoSupabaseService.findByCliente_NroDocumento(nro);
+        return prestamoJpaService.findByCliente_NroDocumento(nro);
     }
 
 
@@ -505,7 +503,7 @@ public class PrestamoService {
 
     public void actualizarEstadoPrestamos() {
 
-        List<Prestamo> prestamos = prestamoSupabaseService.findAll();
+        List<Prestamo> prestamos = prestamoJpaService.findAll();
 
         for (Prestamo prestamo : prestamos) {
 
@@ -522,7 +520,7 @@ public class PrestamoService {
                 if (fechaUltimaCuota.plus(1, ChronoUnit.YEARS).isBefore(LocalDate.now())) {
 
                     prestamo.setEstado("Deuda Judicial");
-                    prestamoSupabaseService.save(prestamo);
+                    prestamoJpaService.save(prestamo);
                 }
             }
         }

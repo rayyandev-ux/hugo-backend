@@ -104,21 +104,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId> <!-- Si usas WebClient -->
-        </dependency>
-
-        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>3.0.0</version>
-        </dependency>
-
-        <!-- HTTP Client para Supabase REST API -->
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
         </dependency>
 
         <!-- JSON Processing -->

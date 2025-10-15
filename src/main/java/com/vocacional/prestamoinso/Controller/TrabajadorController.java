@@ -5,8 +5,8 @@ import com.vocacional.prestamoinso.DTO.TrabajadorDTO;
 import com.vocacional.prestamoinso.DTO.LoginRequestDTO;
 import com.vocacional.prestamoinso.Entity.Trabajador;
 import com.vocacional.prestamoinso.Entity.User;
-import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
-import com.vocacional.prestamoinso.Service.UserSupabaseService;
+import com.vocacional.prestamoinso.Service.TrabajadorJpaService;
+import com.vocacional.prestamoinso.Service.UserJpaService;
 import com.vocacional.prestamoinso.Service.JwtUtilService;
 import com.vocacional.prestamoinso.Service.TrabajadorService;
 import com.vocacional.prestamoinso.Service.UserService;
@@ -33,11 +33,11 @@ public class TrabajadorController {
     @Autowired
     private JwtUtilService jwtUtilService;
     @Autowired
-    private TrabajadorSupabaseService trabajadorSupabaseService;
+    private TrabajadorJpaService trabajadorJpaService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private UserSupabaseService userSupabaseService;
+    private UserJpaService userJpaService;
     @Autowired
     private UserService userService;
 
@@ -61,20 +61,38 @@ public class TrabajadorController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        // Usar findByUsernameWithPassword para obtener el password completo
-        User user = userSupabaseService.findByUsernameWithPassword(username);
-        if (user != null) {
+        // Usar findByUsername para obtener el usuario
+        Optional<User> userOpt = userJpaService.findByUsername(username);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            // Debug: verificar el password obtenido
+            System.out.println("DEBUG LOGIN - Usuario encontrado: " + user.getUsername());
+            System.out.println("DEBUG LOGIN - Password obtenido: " + (user.getPassword() != null ? "SÍ (length: " + user.getPassword().length() + ")" : "NO"));
+            System.out.println("DEBUG LOGIN - Password primeros 20 chars: " + (user.getPassword() != null && user.getPassword().length() > 20 ? user.getPassword().substring(0, 20) + "..." : user.getPassword()));
+            
             // Verificar si es un trabajador
-            Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByUsername(username);
+            Optional<Trabajador> optionalTrabajador = trabajadorJpaService.findByUsername(username);
             if (optionalTrabajador.isPresent()) {
                 Trabajador trabajador = optionalTrabajador.get();
                 
+                // Debug: verificar el password antes de la comparación
+                System.out.println("DEBUG LOGIN - Password para comparar: " + (user.getPassword() != null ? "PRESENTE" : "NULL"));
+                System.out.println("DEBUG LOGIN - Password ingresado: " + password);
+                
                 // Usar el password del user que tiene el password completo
+                if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                    System.out.println("DEBUG LOGIN - Password es null o vacío, rechazando login");
+                    response.put("message", "Error interno: password no disponible");
+                    return ResponseEntity.badRequest().body(response);
+                }
+                
                 if (!passwordEncoder.matches(password, user.getPassword())) {
+                    System.out.println("DEBUG LOGIN - Password no coincide");
                     response.put("message", "Contraseña incorrecta");
                     return ResponseEntity.badRequest().body(response);
                 }
 
+                System.out.println("DEBUG LOGIN - Password coincide, generando token");
                 String token = jwtUtilService.generateToken(trabajador);
 
                 response.put("message", "Inicio de sesión exitoso");
@@ -144,10 +162,10 @@ public class TrabajadorController {
 
         String username = jwtUtilService.extractUsername(jwt);
 
-        User usuario = userSupabaseService.findByUsernameWithPassword(username);
+        Optional<User> usuarioOpt = userJpaService.findByUsername(username);
 
-        if (usuario != null) {
-            return ResponseEntity.ok(usuario);
+        if (usuarioOpt.isPresent()) {
+            return ResponseEntity.ok(usuarioOpt.get());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -179,13 +197,13 @@ public class TrabajadorController {
         
         Map<String, Object> response = new HashMap<>();
 
-        Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByUsername(usernameValue);
+        Optional<Trabajador> optionalTrabajador = trabajadorJpaService.findByUsername(usernameValue);
         if (optionalTrabajador.isPresent()) {
             Trabajador trabajador = optionalTrabajador.get();
 
             trabajador.setPassword(passwordEncoder.encode(passwordValue));
             trabajador.setNeedsPasswordChange(false);
-            trabajadorSupabaseService.save(trabajador);
+            trabajadorJpaService.save(trabajador);
 
             response.put("message", "Contraseña cambiada exitosamente");
             return ResponseEntity.ok(response);
