@@ -49,9 +49,10 @@ public class TrabajadorController {
     ) {
         Map<String, Object> response = new HashMap<>();
 
+        // Extraer credenciales del cuerpo JSON si está presente
         if (body != null) {
-            if (username == null) username = body.getUsername();
-            if (password == null) password = body.getPassword();
+            username = body.getUsername();
+            password = body.getPassword();
         }
 
         if (username == null || password == null) {
