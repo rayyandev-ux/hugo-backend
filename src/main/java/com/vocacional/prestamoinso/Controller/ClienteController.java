@@ -9,6 +9,7 @@ import com.vocacional.prestamoinso.Repository.ClienteRepository;
 import com.vocacional.prestamoinso.Service.ClienteService;
 import com.vocacional.prestamoinso.Service.JwtUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,14 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Cliente> registrarCliente(@RequestBody ClienteDTO registroClienteDTO) {
+    public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO registroClienteDTO) {
         try {
             Cliente cliente;
             // Validar que el DTO tenga el número de documento
             if (registroClienteDTO.getNroDocumento() == null || registroClienteDTO.getNroDocumento().trim().isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "El número de documento es requerido.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
             
             // Si el cliente ya existe, no lanzamos la excepción Conflict
@@ -45,9 +48,15 @@ public class ClienteController {
                 cliente = clienteService.registrarCliente(registroClienteDTO);
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Ya existe un cliente con este email.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error interno del servidor.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

@@ -83,16 +83,39 @@ public class TrabajadorController {
 
 
     @PostMapping("/register")
-    public void registerWorker(@Validated @RequestBody TrabajadorDTO trabajadorDTO) {
-        userService.registerTrabajador(trabajadorDTO);
-        ResponseEntity.ok().body("{\"message\": \"Usuario registrado con éxito.\"}");
+    public ResponseEntity<Map<String, String>> registerWorker(@Validated @RequestBody TrabajadorDTO trabajadorDTO) {
+        try {
+            userService.registerTrabajador(trabajadorDTO);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario registrado con éxito.");
+            return ResponseEntity.ok(response);
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "El email ya está registrado.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error interno del servidor.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
-
     @PostMapping("/register-admin")
-    public void registerAdmin(@Validated @RequestBody TrabajadorDTO trabajadorDTO) {
-        userService.registerAdmin(trabajadorDTO);
-        ResponseEntity.ok().body("{\"message\": \"Usuario registrado con éxito.\"}");
+    public ResponseEntity<Map<String, String>> registerAdmin(@Validated @RequestBody TrabajadorDTO trabajadorDTO) {
+        try {
+            userService.registerAdmin(trabajadorDTO);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario registrado con éxito.");
+            return ResponseEntity.ok(response);
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "El email ya está registrado.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error interno del servidor.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
 
