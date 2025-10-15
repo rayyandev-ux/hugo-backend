@@ -64,15 +64,15 @@ public class SupabaseService {
 
         Request request = new Request.Builder()
                 .url(urlBuilder.build())
-                .addHeader("apikey", supabaseConfig.getAnonKey())
-                .addHeader("Authorization", "Bearer " + supabaseConfig.getAnonKey())
+                .addHeader("apikey", supabaseConfig.getServiceRoleKey())
+                .addHeader("Authorization", "Bearer " + supabaseConfig.getServiceRoleKey())
                 .addHeader("Content-Type", "application/json")
                 .get()
                 .build();
 
         System.out.println("Headers enviados:");
-        System.out.println("apikey: " + supabaseConfig.getAnonKey());
-        System.out.println("Authorization: Bearer " + supabaseConfig.getAnonKey());
+        System.out.println("apikey: " + supabaseConfig.getServiceRoleKey());
+        System.out.println("Authorization: Bearer " + supabaseConfig.getServiceRoleKey());
 
         try (Response response = okHttpClient.newCall(request).execute()) {
             System.out.println("Código de respuesta: " + response.code());

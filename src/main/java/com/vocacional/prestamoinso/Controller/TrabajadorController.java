@@ -61,21 +61,27 @@ public class TrabajadorController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByUsername(username);
-        if (optionalTrabajador.isPresent()) {
-            Trabajador trabajador = optionalTrabajador.get();
+        // Usar findByUsernameWithPassword para obtener el password completo
+        User user = userSupabaseService.findByUsernameWithPassword(username);
+        if (user != null) {
+            // Verificar si es un trabajador
+            Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByUsername(username);
+            if (optionalTrabajador.isPresent()) {
+                Trabajador trabajador = optionalTrabajador.get();
+                
+                // Usar el password del user que tiene el password completo
+                if (!passwordEncoder.matches(password, user.getPassword())) {
+                    response.put("message", "Contraseña incorrecta");
+                    return ResponseEntity.badRequest().body(response);
+                }
 
-            if (!passwordEncoder.matches(password, trabajador.getPassword())) {
-                response.put("message", "Contraseña incorrecta");
-                return ResponseEntity.badRequest().body(response);
+                String token = jwtUtilService.generateToken(trabajador);
+
+                response.put("message", "Inicio de sesión exitoso");
+                response.put("token", token);
+                response.put("requiresPasswordChange", trabajador.isNeedsPasswordChange());
+                return ResponseEntity.ok(response);
             }
-
-            String token = jwtUtilService.generateToken(trabajador);
-
-            response.put("message", "Inicio de sesión exitoso");
-            response.put("token", token);
-            response.put("requiresPasswordChange", trabajador.isNeedsPasswordChange());
-            return ResponseEntity.ok(response);
         }
 
         response.put("message", "Trabajador no registrado");
@@ -136,11 +142,9 @@ public class TrabajadorController {
 
         String jwt = token.substring(7);
 
-
         String username = jwtUtilService.extractUsername(jwt);
 
-
-        User usuario = userSupabaseService.findByUsername(username);
+        User usuario = userSupabaseService.findByUsernameWithPassword(username);
 
         if (usuario != null) {
             return ResponseEntity.ok(usuario);

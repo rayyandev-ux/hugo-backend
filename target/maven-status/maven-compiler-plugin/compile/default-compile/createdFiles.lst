@@ -3,6 +3,7 @@ com\vocacional\prestamoinso\Filter\JwtRequestFilter.class
 com\vocacional\prestamoinso\util\PasswordGenerator.class
 com\vocacional\prestamoinso\Config\ModelMapperConfig.class
 com\vocacional\prestamoinso\Entity\User.class
+com\vocacional\prestamoinso\Component\DirectDatabaseChecker.class
 com\vocacional\prestamoinso\Component\AdminPasswordFixer.class
 com\vocacional\prestamoinso\DTO\UserDTO.class
 com\vocacional\prestamoinso\Entity\Trabajador.class
@@ -38,6 +39,7 @@ com\vocacional\prestamoinso\Repository\CronogramaPagosRepository.class
 com\vocacional\prestamoinso\Component\TrabajadorInitializer.class
 com\vocacional\prestamoinso\Repository\TrabajadorRepository.class
 com\vocacional\prestamoinso\Repository\UserRepository.class
+com\vocacional\prestamoinso\Component\SupabaseDebugger.class
 com\vocacional\prestamoinso\Entity\enums\ERole.class
 com\vocacional\prestamoinso\Config\SupabaseConfig.class
 com\vocacional\prestamoinso\Entity\CronogramaPagos.class

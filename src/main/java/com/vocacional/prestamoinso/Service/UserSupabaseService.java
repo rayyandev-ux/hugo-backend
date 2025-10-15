@@ -4,10 +4,12 @@ import com.vocacional.prestamoinso.Entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,6 +19,9 @@ public class UserSupabaseService {
 
     @Autowired
     private SupabaseService supabaseService;
+    
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private static final String TABLE_NAME = "users";
 
@@ -58,13 +63,31 @@ public class UserSupabaseService {
     }
 
     /**
-     * Busca un usuario por token de reset de contraseña
+     * Busca un usuario por username usando JdbcTemplate como fallback
+     * Este método se usa cuando Supabase API filtra el campo password por RLS
      */
-    public User findByResetPasswordToken(String token) {
+    public User findByUsernameWithPassword(String username) {
         try {
-            return supabaseService.findByField(TABLE_NAME, "reset_password_token", token, User.class);
-        } catch (IOException e) {
-            logger.error("Error al buscar usuario por token: {}", e.getMessage(), e);
+            // Primero intentar con Supabase API
+            User user = supabaseService.findByField(TABLE_NAME, "username", username, User.class);
+            
+            // Si el usuario existe pero no tiene password, usar JdbcTemplate
+            if (user != null && user.getPassword() == null) {
+                logger.info("Password filtrado por RLS, usando JdbcTemplate para obtener password completo");
+                
+                String query = "SELECT id, nombre, apellido, username, email, password, role, reset_password_token, created_at, updated_at FROM users WHERE username = ?";
+                List<Map<String, Object>> results = jdbcTemplate.queryForList(query, username);
+                
+                if (!results.isEmpty()) {
+                    Map<String, Object> row = results.get(0);
+                    user.setPassword((String) row.get("password"));
+                    logger.info("Password obtenido exitosamente desde base de datos directa");
+                }
+            }
+            
+            return user;
+        } catch (Exception e) {
+            logger.error("Error al buscar usuario por username con password: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -78,6 +101,18 @@ public class UserSupabaseService {
         } catch (IOException e) {
             logger.error("Error al buscar todos los usuarios: {}", e.getMessage(), e);
             return List.of();
+        }
+    }
+
+    /**
+     * Busca un usuario por token de reset de contraseña
+     */
+    public User findByResetPasswordToken(String token) {
+        try {
+            return supabaseService.findByField(TABLE_NAME, "reset_password_token", token, User.class);
+        } catch (IOException e) {
+            logger.error("Error al buscar usuario por token: {}", e.getMessage(), e);
+            return null;
         }
     }
 

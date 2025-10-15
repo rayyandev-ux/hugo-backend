@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User trabajador = userSupabaseService.findByUsername(username);
+        User trabajador = userSupabaseService.findByUsernameWithPassword(username);
         if (trabajador == null) {
             throw new UsernameNotFoundException("Traabajador no encontrado: " + username);
         }
