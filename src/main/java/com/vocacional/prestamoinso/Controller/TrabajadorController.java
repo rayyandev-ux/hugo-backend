@@ -126,15 +126,35 @@ public class TrabajadorController {
 
 
     @PostMapping("/change-password")
-    public ResponseEntity<Map<String, Object>> changePassword(@RequestParam String username, @RequestParam String newPassword) {
+    public ResponseEntity<Map<String, Object>> changePassword(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String newPassword,
+            @RequestBody(required = false) Map<String, String> requestBody) {
+        
+        // Obtener parámetros de JSON o request params
+        String usernameValue = username;
+        String passwordValue = newPassword;
+        
+        // Si vienen en el body JSON, los usamos
+        if (requestBody != null) {
+            usernameValue = requestBody.getOrDefault("username", usernameValue);
+            passwordValue = requestBody.getOrDefault("newPassword", passwordValue);
+        }
+        
+        // Validar que tengamos los datos necesarios
+        if (usernameValue == null || passwordValue == null) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Se requiere username y newPassword");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+        
         Map<String, Object> response = new HashMap<>();
 
-        Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByUsername(username);
+        Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByUsername(usernameValue);
         if (optionalTrabajador.isPresent()) {
             Trabajador trabajador = optionalTrabajador.get();
 
-
-            trabajador.setPassword(passwordEncoder.encode(newPassword));
+            trabajador.setPassword(passwordEncoder.encode(passwordValue));
             trabajador.setNeedsPasswordChange(false);
             trabajadorRepository.save(trabajador);
 
@@ -149,9 +169,27 @@ public class TrabajadorController {
 
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+    public ResponseEntity<?> forgotPassword(
+            @RequestParam(required = false) String email,
+            @RequestBody(required = false) Map<String, String> requestBody) {
+        
+        // Obtener email de JSON o request params
+        String emailValue = email;
+        
+        // Si viene en el body JSON, lo usamos
+        if (requestBody != null && requestBody.containsKey("email")) {
+            emailValue = requestBody.get("email");
+        }
+        
+        // Validar que tengamos el email
+        if (emailValue == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                    .body(Map.of("error", "Se requiere el email"));
+        }
+        
         try {
-            trabajadorService.generateResetPasswordToken(email);
+            trabajadorService.generateResetPasswordToken(emailValue);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_TYPE, "application/json")
                     .body(Map.of("message", "Se ha enviado un correo con instrucciones para restablecer su contraseña."));
@@ -163,9 +201,29 @@ public class TrabajadorController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+    public ResponseEntity<?> resetPassword(
+            @RequestParam(required = false) String token,
+            @RequestParam(required = false) String newPassword,
+            @RequestBody(required = false) Map<String, String> requestBody) {
+        
+        // Obtener parámetros de JSON o request params
+        String tokenValue = token;
+        String passwordValue = newPassword;
+        
+        // Si vienen en el body JSON, los usamos
+        if (requestBody != null) {
+            tokenValue = requestBody.getOrDefault("token", tokenValue);
+            passwordValue = requestBody.getOrDefault("newPassword", passwordValue);
+        }
+        
+        // Validar que tengamos los datos necesarios
+        if (tokenValue == null || passwordValue == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Se requiere token y newPassword"));
+        }
+        
         try {
-            trabajadorService.resetPassword(token, newPassword);
+            trabajadorService.resetPassword(tokenValue, passwordValue);
 
             return ResponseEntity.ok(Map.of("message", "Contraseña actualizada exitosamente."));
         } catch (Exception e) {
