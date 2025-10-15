@@ -41,7 +41,25 @@ public class TrabajadorInitializer implements CommandLineRunner {
                     
                     System.out.println("Registro de trabajador creado exitosamente para usuario admin existente");
                 } else {
-                    System.out.println("Usuario admin no encontrado en tabla users, no se puede crear trabajador");
+                    // Crear el usuario admin completo si no existe
+                    System.out.println("Usuario admin no encontrado, creando usuario admin completo...");
+                    
+                    // Encriptar la contraseña
+                    String encryptedPassword = passwordEncoder.encode("admin123");
+                    
+                    // Insertar en la tabla users
+                    String insertUserSql = "INSERT INTO users (nombre, apellido, username, email, password, role) VALUES (?, ?, ?, ?, ?, ?)";
+                    jdbcTemplate.update(insertUserSql, "Admin", "Sistema", "admin", "admin@sistema.com", encryptedPassword, "ADMIN");
+                    
+                    // Obtener el ID del usuario recién creado
+                    var newUser = userRepository.findByUsername("admin");
+                    if (newUser != null) {
+                        // Insertar en la tabla trabajador
+                        String insertTrabajadorSql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?)";
+                        jdbcTemplate.update(insertTrabajadorSql, newUser.getId(), false);
+                        
+                        System.out.println("Usuario admin creado exitosamente con ID: " + newUser.getId());
+                    }
                 }
             } else {
                 System.out.println("Usuario admin ya existe en la tabla trabajador");
