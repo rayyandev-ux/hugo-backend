@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: prestamo-inso-backend
+    env: java
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -Dspring.profiles.active=production -jar target/prestamo-inso-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: PORT
+        value: 8080
+      - key: SUPABASE_DATABASE_URL
+        value: jdbc:postgresql://db.dtalvtuvoquygqzkpgqa.supabase.co:5432/postgres?sslmode=require
+      - key: SUPABASE_DATABASE_USERNAME
+        value: postgres
+      - key: SUPABASE_DATABASE_PASSWORD
+        sync: false
+      - key: SPRING_MAIL_USERNAME
+        sync: false
+      - key: SPRING_MAIL_PASSWORD
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
