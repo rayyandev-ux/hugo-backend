@@ -56,14 +56,20 @@ public class TrabajadorService {
     }
 
     public void resetPassword(String token, String newPassword) throws Exception {
-        User user = userRepository.findByResetPasswordToken(token);
-        if (user == null) {
-            throw new Exception("Token inválido.");
+        Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByResetPasswordToken(token);
+        if (optionalTrabajador.isPresent()) {
+            Trabajador trabajador = optionalTrabajador.get();
+            trabajador.setPassword(passwordEncoder.encode(newPassword));
+            trabajador.setResetPasswordToken(null);
+            trabajador.setNeedsPasswordChange(false);
+            trabajadorRepository.save(trabajador);
+        } else {
+            throw new Exception("Token de recuperación inválido o expirado");
         }
+    }
 
-        user.setPassword(passwordEncoder.encode(newPassword));
-        user.setResetPasswordToken(null);
-        userRepository.save(user);
+    public java.util.List<Trabajador> listarTodos() {
+        return trabajadorRepository.findAll();
     }
 
     private void sendResetPasswordEmail(String email, String token) throws Exception {

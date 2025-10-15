@@ -234,4 +234,14 @@ public class TrabajadorController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<java.util.List<Trabajador>> listarTrabajadores() {
+        try {
+            java.util.List<Trabajador> trabajadores = trabajadorService.listarTodos();
+            return ResponseEntity.ok(trabajadores);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
