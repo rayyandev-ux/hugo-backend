@@ -11,6 +11,7 @@ import com.vocacional.prestamoinso.Service.JwtUtilService;
 import com.vocacional.prestamoinso.Service.TrabajadorService;
 import com.vocacional.prestamoinso.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
