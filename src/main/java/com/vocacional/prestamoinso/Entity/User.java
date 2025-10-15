@@ -1,6 +1,8 @@
 package com.vocacional.prestamoinso.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vocacional.prestamoinso.Entity.enums.ERole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -12,6 +14,7 @@ import lombok.Data;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     @Id
@@ -35,6 +38,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ERole role;
-    @JsonIgnore
+    @JsonProperty(value = "reset_password_token")
     private String resetPasswordToken;
 }

@@ -37,13 +37,25 @@ public class SupabaseService {
             urlBuilder.addQueryParameter("select", select);
         }
         
-        // Cambiar el parámetro filter por limit directamente
+        // Procesar filtros como parámetros de consulta directos
         if (filter != null && !filter.isEmpty()) {
             if (filter.startsWith("limit=")) {
                 String limitValue = filter.substring(6);
                 urlBuilder.addQueryParameter("limit", limitValue);
+            } else if (filter.startsWith("order=")) {
+                String orderValue = filter.substring(6);
+                urlBuilder.addQueryParameter("order", orderValue);
             } else {
-                urlBuilder.addQueryParameter("filter", filter);
+                // Parsear filtros múltiples separados por &
+                String[] filterParts = filter.split("&");
+                for (String filterPart : filterParts) {
+                    if (filterPart.contains("=")) {
+                        String[] keyValue = filterPart.split("=", 2);
+                        if (keyValue.length == 2) {
+                            urlBuilder.addQueryParameter(keyValue[0], keyValue[1]);
+                        }
+                    }
+                }
             }
         }
 

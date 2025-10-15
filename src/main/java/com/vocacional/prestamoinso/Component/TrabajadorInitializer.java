@@ -36,10 +36,14 @@ public class TrabajadorInitializer implements CommandLineRunner {
                     // Insertar directamente en la tabla trabajador usando SQL nativo
                     System.out.println("Usuario admin encontrado en tabla users, creando registro en trabajador...");
                     
-                    String sql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?)";
-                    jdbcTemplate.update(sql, existingUser.getId(), false);
+                    String sql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?) ON CONFLICT (id) DO NOTHING";
+                    int rowsAffected = jdbcTemplate.update(sql, existingUser.getId(), false);
                     
-                    System.out.println("Registro de trabajador creado exitosamente para usuario admin existente");
+                    if (rowsAffected > 0) {
+                        System.out.println("Registro de trabajador creado exitosamente para usuario admin existente");
+                    } else {
+                        System.out.println("El registro de trabajador ya existe para el usuario admin");
+                    }
                 } else {
                     // Crear el usuario admin completo si no existe
                     System.out.println("Usuario admin no encontrado, creando usuario admin completo...");
@@ -47,18 +51,29 @@ public class TrabajadorInitializer implements CommandLineRunner {
                     // Encriptar la contraseña
                     String encryptedPassword = passwordEncoder.encode("admin123");
                     
-                    // Insertar en la tabla users
-                    String insertUserSql = "INSERT INTO users (nombre, apellido, username, email, password, role) VALUES (?, ?, ?, ?, ?, ?)";
-                    jdbcTemplate.update(insertUserSql, "Admin", "Sistema", "admin", "admin@sistema.com", encryptedPassword, "ADMIN");
+                    // Insertar en la tabla users con ON CONFLICT para evitar duplicados
+                    String insertUserSql = "INSERT INTO users (nombre, apellido, username, email, password, role) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (username) DO NOTHING";
+                    int userRowsAffected = jdbcTemplate.update(insertUserSql, "Admin", "Sistema", "admin", "admin@sistema.com", encryptedPassword, "ADMIN");
                     
-                    // Obtener el ID del usuario recién creado
-                    var newUser = userSupabaseService.findByUsername("admin");
-                    if (newUser != null) {
-                        // Insertar en la tabla trabajador
-                        String insertTrabajadorSql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?)";
-                        jdbcTemplate.update(insertTrabajadorSql, newUser.getId(), false);
-                        
-                        System.out.println("Usuario admin creado exitosamente con ID: " + newUser.getId());
+                    if (userRowsAffected > 0) {
+                        // Obtener el ID del usuario recién creado
+                        var newUser = userSupabaseService.findByUsername("admin");
+                        if (newUser != null) {
+                            // Insertar en la tabla trabajador
+                            String insertTrabajadorSql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?) ON CONFLICT (id) DO NOTHING";
+                            jdbcTemplate.update(insertTrabajadorSql, newUser.getId(), false);
+                            
+                            System.out.println("Usuario admin creado exitosamente con ID: " + newUser.getId());
+                        }
+                    } else {
+                        System.out.println("El usuario admin ya existe en la base de datos");
+                        // Intentar crear el registro de trabajador si no existe
+                        var existingUserAfterConflict = userSupabaseService.findByUsername("admin");
+                        if (existingUserAfterConflict != null) {
+                            String insertTrabajadorSql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?) ON CONFLICT (id) DO NOTHING";
+                            jdbcTemplate.update(insertTrabajadorSql, existingUserAfterConflict.getId(), false);
+                            System.out.println("Verificado registro de trabajador para usuario admin existente");
+                        }
                     }
                 }
             } else {
