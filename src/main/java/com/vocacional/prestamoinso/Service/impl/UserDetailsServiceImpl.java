@@ -1,9 +1,9 @@
 package com.vocacional.prestamoinso.Service.impl;
 
 import com.vocacional.prestamoinso.Entity.enums.ERole;
-import com.vocacional.prestamoinso.Repository.ClienteRepository;
-import com.vocacional.prestamoinso.Repository.TrabajadorRepository;
-import com.vocacional.prestamoinso.Repository.UserRepository;
+import com.vocacional.prestamoinso.Service.ClienteSupabaseService;
+import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.UserSupabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,15 +17,15 @@ import java.util.Collection;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteSupabaseService clienteSupabaseService;
     @Autowired
-    private TrabajadorRepository trabajadorRepository;
+    private TrabajadorSupabaseService trabajadorSupabaseService;
     @Autowired
-    private UserRepository userRepository;
+    private UserSupabaseService userSupabaseService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User trabajador = userRepository.findByUsername(username);
+        User trabajador = userSupabaseService.findByUsername(username);
         if (trabajador == null) {
             throw new UsernameNotFoundException("Traabajador no encontrado: " + username);
         }

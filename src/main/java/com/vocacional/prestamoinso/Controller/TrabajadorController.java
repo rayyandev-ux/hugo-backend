@@ -5,8 +5,8 @@ import com.vocacional.prestamoinso.DTO.TrabajadorDTO;
 import com.vocacional.prestamoinso.DTO.LoginRequestDTO;
 import com.vocacional.prestamoinso.Entity.Trabajador;
 import com.vocacional.prestamoinso.Entity.User;
-import com.vocacional.prestamoinso.Repository.TrabajadorRepository;
-import com.vocacional.prestamoinso.Repository.UserRepository;
+import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.UserSupabaseService;
 import com.vocacional.prestamoinso.Service.JwtUtilService;
 import com.vocacional.prestamoinso.Service.TrabajadorService;
 import com.vocacional.prestamoinso.Service.UserService;
@@ -33,11 +33,11 @@ public class TrabajadorController {
     @Autowired
     private JwtUtilService jwtUtilService;
     @Autowired
-    private TrabajadorRepository trabajadorRepository;
+    private TrabajadorSupabaseService trabajadorSupabaseService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private UserRepository userRepository;
+    private UserSupabaseService userSupabaseService;
     @Autowired
     private UserService userService;
 
@@ -61,7 +61,7 @@ public class TrabajadorController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByUsername(username);
+        Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByUsername(username);
         if (optionalTrabajador.isPresent()) {
             Trabajador trabajador = optionalTrabajador.get();
 
@@ -140,7 +140,7 @@ public class TrabajadorController {
         String username = jwtUtilService.extractUsername(jwt);
 
 
-        User usuario = userRepository.findByUsername(username);
+        User usuario = userSupabaseService.findByUsername(username);
 
         if (usuario != null) {
             return ResponseEntity.ok(usuario);
@@ -175,13 +175,13 @@ public class TrabajadorController {
         
         Map<String, Object> response = new HashMap<>();
 
-        Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByUsername(usernameValue);
+        Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByUsername(usernameValue);
         if (optionalTrabajador.isPresent()) {
             Trabajador trabajador = optionalTrabajador.get();
 
             trabajador.setPassword(passwordEncoder.encode(passwordValue));
             trabajador.setNeedsPasswordChange(false);
-            trabajadorRepository.save(trabajador);
+            trabajadorSupabaseService.save(trabajador);
 
             response.put("message", "Contraseña cambiada exitosamente");
             return ResponseEntity.ok(response);

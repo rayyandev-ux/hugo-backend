@@ -5,7 +5,7 @@ import com.vocacional.prestamoinso.DTO.ReniecResponseDTO;
 import com.vocacional.prestamoinso.DTO.SunatResponseDTO;
 import com.vocacional.prestamoinso.Entity.Cliente;
 import com.vocacional.prestamoinso.Exception.ConflictException;
-import com.vocacional.prestamoinso.Repository.ClienteRepository;
+import com.vocacional.prestamoinso.Service.ClienteSupabaseService;
 import com.vocacional.prestamoinso.Service.ClienteService;
 import com.vocacional.prestamoinso.Service.JwtUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class ClienteController {
     private JwtUtilService jwtUtilService;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteSupabaseService clienteSupabaseService;
 
     @PostMapping("/registrar")
     public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO registroClienteDTO) {
@@ -42,8 +42,8 @@ public class ClienteController {
             }
             
             // Si el cliente ya existe, no lanzamos la excepción Conflict
-            if (clienteRepository.existsByNroDocumento(registroClienteDTO.getNroDocumento())) {
-                cliente = clienteRepository.findByNroDocumento(registroClienteDTO.getNroDocumento());
+            if (clienteSupabaseService.existsByNroDocumento(registroClienteDTO.getNroDocumento())) {
+                cliente = clienteSupabaseService.findByNroDocumento(registroClienteDTO.getNroDocumento());
             } else {
                 cliente = clienteService.registrarCliente(registroClienteDTO);
             }

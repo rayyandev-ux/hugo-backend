@@ -1,8 +1,10 @@
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Component\TrabajadorInitializer.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Config\ModelMapperConfig.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Config\SecurityConfig.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Config\SupabaseConfig.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Controller\ClienteController.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Controller\PrestamoController.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Controller\SupabaseTestController.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Controller\TrabajadorController.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\DTO\ClienteDTO.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\DTO\CronogramaPagosDTO.java
@@ -30,9 +32,15 @@ F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\c
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Repository\TrabajadorRepository.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Repository\UserRepository.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\ClienteService.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\ClienteSupabaseService.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\CronogramaPagosSupabaseService.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\impl\UserDetailsServiceImpl.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\JwtUtilService.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\PrestamoService.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\PrestamoSupabaseService.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\SupabaseService.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\TrabajadorService.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\TrabajadorSupabaseService.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\UserService.java
+F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\Service\UserSupabaseService.java
 F:\Proyectos\proyectohugi\prestamo-inso-backend-new\hugo-backend\src\main\java\com\vocacional\prestamoinso\util\PasswordGenerator.java

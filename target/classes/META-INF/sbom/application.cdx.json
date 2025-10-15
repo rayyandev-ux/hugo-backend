@@ -4,7 +4,7 @@
   "serialNumber" : "urn:uuid:db70cd6e-6ebd-370a-9e50-b68327bd54fa",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2025-10-15T07:30:37Z",
+    "timestamp" : "2025-10-15T08:28:25Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -5424,216 +5424,6 @@
       "bom-ref" : "pkg:maven/io.jsonwebtoken/jjwt-jackson@0.11.5?type=jar"
     },
     {
-      "publisher" : "FasterXML",
-      "group" : "com.fasterxml.jackson.core",
-      "name" : "jackson-databind",
-      "version" : "2.17.2",
-      "description" : "General data-binding functionality for Jackson: works on core streaming API",
-      "scope" : "required",
-      "hashes" : [
-        {
-          "alg" : "MD5",
-          "content" : "3e1ff7c1f0fda885946619a47ef9d5de"
-        },
-        {
-          "alg" : "SHA-1",
-          "content" : "e6deb029e5901e027c129341fac39e515066b68c"
-        },
-        {
-          "alg" : "SHA-256",
-          "content" : "c04993f33c0f845342653784f14f38373d005280e6359db5f808701cfae73c0c"
-        },
-        {
-          "alg" : "SHA-512",
-          "content" : "ec62267bf58aea531ec7f253e67974fac89e8aa61e7b54a7fb00edf3132ecb969b510630fd353adbbd2ab7d845a25702f168c296c57983a00bd6abc9ce3630f9"
-        },
-        {
-          "alg" : "SHA-384",
-          "content" : "d2de4602f779a456d0037f9d64efa8bcf9a1a9f06e3c628b2a3b2313319e22209cdfab9157f9251243bc05da870bdcf4"
-        },
-        {
-          "alg" : "SHA3-384",
-          "content" : "14618ad7737700ccd941feefd0bbbb7235ecbc1ac0cf22ba1bd72155eb68a800e98fe72f6ea03ab71cb9927a1d117d39"
-        },
-        {
-          "alg" : "SHA3-256",
-          "content" : "800f9886351c0968d6640e9c7e312c963b0146022fcfc27b173d06fe0c581041"
-        },
-        {
-          "alg" : "SHA3-512",
-          "content" : "49ff7e89ab8936043ac9371cc05c57bf88899a91ca11bd50227c58da9e6716c270e38c34bade5ba5cf39ed6443edf538bd25e85127c3e22f6788b84e14f3019a"
-        }
-      ],
-      "licenses" : [
-        {
-          "license" : {
-            "id" : "Apache-2.0"
-          }
-        }
-      ],
-      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.17.2?type=jar",
-      "externalReferences" : [
-        {
-          "type" : "website",
-          "url" : "https://github.com/FasterXML/jackson"
-        },
-        {
-          "type" : "distribution-intake",
-          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        },
-        {
-          "type" : "issue-tracker",
-          "url" : "https://github.com/FasterXML/jackson-databind/issues"
-        },
-        {
-          "type" : "vcs",
-          "url" : "https://github.com/FasterXML/jackson-databind"
-        }
-      ],
-      "type" : "library",
-      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.17.2?type=jar"
-    },
-    {
-      "publisher" : "FasterXML",
-      "group" : "com.fasterxml.jackson.core",
-      "name" : "jackson-annotations",
-      "version" : "2.17.2",
-      "description" : "Core annotations used for value types, used by Jackson data binding package.",
-      "scope" : "required",
-      "hashes" : [
-        {
-          "alg" : "MD5",
-          "content" : "e68e7e593ae47e106421688707683297"
-        },
-        {
-          "alg" : "SHA-1",
-          "content" : "147b7b9412ffff24339f8aba080b292448e08698"
-        },
-        {
-          "alg" : "SHA-256",
-          "content" : "873a606e23507969f9bbbea939d5e19274a88775ea5a169ba7e2d795aa5156e1"
-        },
-        {
-          "alg" : "SHA-512",
-          "content" : "006d3a054b22daa7f378b005cc29b3544dc7f3b509176e0eac946e0a3bafa73b824bae61b5183b61938b19044d2142a285da2fce2ffdaef5bfe91b2d8dcb6804"
-        },
-        {
-          "alg" : "SHA-384",
-          "content" : "edb09e196ede070ba1ab1b99e96be6049f60b664eb89e60e28f08327e510e7aedf8c4696bc719113d24fe3367b8b89b7"
-        },
-        {
-          "alg" : "SHA3-384",
-          "content" : "9c54c25762e7b5e05c5e17deaa35ef5b9af764fb3e19bd790479920d9fb7084f3e89dd2ea2ef2fd680e72aebe74ab271"
-        },
-        {
-          "alg" : "SHA3-256",
-          "content" : "5d1625676fc95b4625ef73658e47074a24804518d1455a610ff40b3017b1b86e"
-        },
-        {
-          "alg" : "SHA3-512",
-          "content" : "b4354ed913789689ac4f7dc7385aa2de383324a6b8ff59a2497b6b605c2451bec372c8a4335189c916b24c7a68e83102e0f53fca54c2389f2006ccc84a5eaa17"
-        }
-      ],
-      "licenses" : [
-        {
-          "license" : {
-            "id" : "Apache-2.0"
-          }
-        }
-      ],
-      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.17.2?type=jar",
-      "externalReferences" : [
-        {
-          "type" : "website",
-          "url" : "https://github.com/FasterXML/jackson"
-        },
-        {
-          "type" : "distribution-intake",
-          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        },
-        {
-          "type" : "issue-tracker",
-          "url" : "https://github.com/FasterXML/jackson-annotations/issues"
-        },
-        {
-          "type" : "vcs",
-          "url" : "https://github.com/FasterXML/jackson-annotations"
-        }
-      ],
-      "type" : "library",
-      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.17.2?type=jar"
-    },
-    {
-      "publisher" : "FasterXML",
-      "group" : "com.fasterxml.jackson.core",
-      "name" : "jackson-core",
-      "version" : "2.17.2",
-      "description" : "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
-      "scope" : "required",
-      "hashes" : [
-        {
-          "alg" : "MD5",
-          "content" : "50c2dab1f29136714d5ef5c6c640336c"
-        },
-        {
-          "alg" : "SHA-1",
-          "content" : "969a35cb35c86512acbadcdbbbfb044c877db814"
-        },
-        {
-          "alg" : "SHA-256",
-          "content" : "721a189241dab0525d9e858e5cb604d3ecc0ede081e2de77d6f34fa5779a5b46"
-        },
-        {
-          "alg" : "SHA-512",
-          "content" : "694ae3bf756421d925f833f59a6309c7748ac3a68b28ed4de8ce0d6f93347dfc19991d1106db911c7da78e20734e6f44a02caef751150378a6ffa638c80fc75b"
-        },
-        {
-          "alg" : "SHA-384",
-          "content" : "acc969e3c312f9d2694e3202eb601dbe2317cb9a444dcb67f6e0f00871f6d5593bebcba272afab55f2541c6a7a107842"
-        },
-        {
-          "alg" : "SHA3-384",
-          "content" : "890610781e8f8c3c1283d8f6bd446d19dd5d83107a852f1446d5d2a4fdb57ff611b36b2267eba46746a305607c5e586a"
-        },
-        {
-          "alg" : "SHA3-256",
-          "content" : "a4b8acc3fd90cc86a9a1507a3e51abf984521f9189218f17a3b551e0a7ccdf44"
-        },
-        {
-          "alg" : "SHA3-512",
-          "content" : "f55e7d0b7a68919c8f8d3b5472796ecb82df852a97b1bb4bb0b45d1f9408d50545b717e8632f7ff975b77541e4d4b35de6ed32eeaff556677227b0985a74172b"
-        }
-      ],
-      "licenses" : [
-        {
-          "license" : {
-            "id" : "Apache-2.0"
-          }
-        }
-      ],
-      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.17.2?type=jar",
-      "externalReferences" : [
-        {
-          "type" : "website",
-          "url" : "https://github.com/FasterXML/jackson-core"
-        },
-        {
-          "type" : "distribution-intake",
-          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        },
-        {
-          "type" : "issue-tracker",
-          "url" : "https://github.com/FasterXML/jackson-core/issues"
-        },
-        {
-          "type" : "vcs",
-          "url" : "https://github.com/FasterXML/jackson-core"
-        }
-      ],
-      "type" : "library",
-      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.17.2?type=jar"
-    },
-    {
       "publisher" : "VMware, Inc.",
       "group" : "org.springframework.boot",
       "name" : "spring-boot-starter-webflux",
@@ -7283,6 +7073,708 @@
       "bom-ref" : "pkg:maven/org.modelmapper/modelmapper@3.0.0?type=jar"
     },
     {
+      "group" : "com.squareup.okhttp3",
+      "name" : "okhttp",
+      "version" : "4.12.0",
+      "description" : "Square’s meticulous HTTP client for Java and Kotlin.",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "6acba053af88fed87e710c6c29911d7c"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "2f4525d4a200e97e1b87449c2cd9bd2e25b7e8cd"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "b1050081b14bb7a3a7e55a4d3ef01b5dcfabc453b4573a4fc019767191d5f4e0"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "da63f77c1cae377b40f6fd00cfbbe8177e760e4e622ae2c66860fffd3bbbdf605c8e8e415762e9263445b2289ee834100237c63949f2e01c30b6704315dd8f7b"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "0a8fbe4104c511169232caa90bc52b8a842b6b4cfba525b1c749ca25ede252992c1a3b6c0b6b43143949bc1f1eea742e"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "f41dde0de63dba9c941083a9e9f9681e5e497149cae49988b1a5b36fe2263d351035ee378e06975b5f3145b91393cd75"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "736a6abc2a2128ddcabcf46c9ba70e4656c2bedaeadbe8f9f76bb807db657b05"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "b2a39d9dff52994e78774d628228f7b3959d6070db2b535c70a90de70a7a716ed011d4dc210886314c1ebad8478b2460c652a2bf68094dba30d3593a1a750c75"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.squareup.okhttp3/okhttp@4.12.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://square.github.io/okhttp/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/square/okhttp"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.squareup.okhttp3/okhttp@4.12.0?type=jar"
+    },
+    {
+      "group" : "com.squareup.okio",
+      "name" : "okio",
+      "version" : "3.6.0",
+      "description" : "A modern I/O library for Android, Java, and Kotlin Multiplatform.",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "990f7b25bbd4fee8787ffabf89aa229f"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "8bf9683c80762d7dd47db12b68e99abea2a7ae05"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "8e63292e5c53bb93c4a6b0c213e79f15990fed250c1340f1c343880e1c9c39b5"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "1c3e2933a386af47266229824744245799a9f77f7f3d3bb44428eb81f02d5df6993e864c8fa794caf08a98fd81a89d5d670037226345a570905d8229c1e55c3b"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "e4ec9777dd2370075b21251db31a9e0562ef1ac142f7a9b114e7ff441995da9650014d59a53515255c5ae46397cb83ed"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "79ae75c700d8f9d79f06a3a1b5a6c7b761169135342a41522ee531b6251a10bca60659af6bc41a23661f0538f9e5c1ea"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "525741a53ff92457979461c8ccb7e1ec4cf4b8adf48dab201c5975cb8911c14f"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "95759b086a3a2df1d90c3765fa297e859744de03e0877f515a360af8a33164c76b81c88a6c9cad01766aece61c50148a815ca21d341d9bdc021e3e0058af1a72"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.squareup.okio/okio@3.6.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/square/okio/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/square/okio/"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.squareup.okio/okio@3.6.0?type=jar"
+    },
+    {
+      "group" : "com.squareup.okio",
+      "name" : "okio-jvm",
+      "version" : "3.6.0",
+      "description" : "A modern I/O library for Android, Java, and Kotlin Multiplatform.",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "26370180ff99a7e8a12dcaac2a70cc6e"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "5600569133b7bdefe1daf9ec7f4abeb6d13e1786"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "67543f0736fc422ae927ed0e504b98bc5e269fda0d3500579337cb713da28412"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "a592e93651fb5e335212bb25c1cf474c1b1076eda68d53cbdc82c383cbdd60114a62b698ca92a3b4b5e416d637a70f2ddabbf8a05551c62d59a240c3e3c3d2c6"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "825856eb690645dbaaa02a6047ebbfe2b2c0a9191d37c177b216160bd89286e98695fc91cd75a9b6ac7e8d1f3a106ff6"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "07c656a88258ed39d50941355e955dfaa74dad3f128ff48e8c2654a53607e940ca3f3383f4f97f1b9e91670734ff1424"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "95baa62978b92951e1921749529688efa24d0a329843427fe822cc4e90399483"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "f2fca794345a93448b2c770c2525586b661447acbac32142fba0152320c164b5cd27d2d6a478e72e72c54ff4e0e93eaa729529b6f5aefa7e6d7b732d0d9532b7"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.squareup.okio/okio-jvm@3.6.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/square/okio/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/square/okio/"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.squareup.okio/okio-jvm@3.6.0?type=jar"
+    },
+    {
+      "group" : "org.jetbrains.kotlin",
+      "name" : "kotlin-stdlib-common",
+      "version" : "1.9.25",
+      "description" : "Kotlin Common Standard Library (legacy, use kotlin-stdlib instead)",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "4af413a0dcfd78656848746e324dd826"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "8c6b97a73550bb942dfad2325907ccfea9dea68e"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "8202e7f032c8dc6698d00c62867701546a7c12c4731ebddfb8eec0788e2eeee4"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "7440996feb5af36e9353064a30f7f8a2258cb93e151be1c29325267779b54cefa6b9d98ac04a452c23055d7a5ae81c4f1647d72c5e45714194f19b80a414f3f6"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "8b1f7594ed19879b5b775a4d94f5cdd27528655a99c9ed46a2d19a71c2e74d696bd22286611397146ed2f3ca6345e83e"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "260deddf3d28dc4fa6457de98d4cd54c8f6ae4b14d9a7c9eafc5200519701fcdc7eff90fe7b631063edb43bab9583c40"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "04d4ff9e601b5a2b047a1b0bf748ea50caa4c4811598af665e936451b6e4372a"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "94aa3cd83f96fef2e02dc4af20de4b22318ca59a6334b2db00accf1d383800ee720961b8b7b0bf90bdc2b445a794a8c85a35ccd2deb1e95d7e03a4a26137e84a"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-common@1.9.25?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://kotlinlang.org/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/JetBrains/kotlin"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-common@1.9.25?type=jar"
+    },
+    {
+      "group" : "org.jetbrains.kotlin",
+      "name" : "kotlin-stdlib-jdk8",
+      "version" : "1.9.25",
+      "description" : "Kotlin Standard Library JDK 8 extension",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "34513d27003b6befef92733e27ca2485"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "20d44e880a284f7b5cd99dd69450b403073f49b2"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "f94fdf78390ce9be30383bf039c5a935caea33b11f037fc7f86bbcee19287e5a"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "98b2213f68ee16cafdaca3f1caee97f71f6f16cade689840aec52ad833737381fe8483105990eed06623d6a96b32b024c472597670e167f112fb130e600d4bf8"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "87371bc178898dfb3df16bffed44fe098a385d53b6d2436ad0ba43d4809cac96414aef5d23ae2fd8b6ad59c2e31b83a1"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "cbcf7ae5b6e8f78f9dc9a07806d72216839f181240bd711e8634b2b20fb5ea982becb6b73ace3c69c8d2952f4176b41d"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "f9ea65a93943cb98c1e74bbbd34288b6d2ffb899568e34865179de2b722804c9"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "6ceca30a23ec00d814a5050009ad6747e646f194c74111bb7c2042e1ebd3dc089673fdf303861a43c4c89e62c5f8fde927953fa2f4a2fa711c4e9837c1a96883"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk8@1.9.25?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://kotlinlang.org/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/JetBrains/kotlin"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk8@1.9.25?type=jar"
+    },
+    {
+      "group" : "org.jetbrains.kotlin",
+      "name" : "kotlin-stdlib",
+      "version" : "1.9.25",
+      "description" : "Kotlin Standard Library",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "33aff849edc75a29bfcfe2b47258b3de"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "f700a2f2b8f0d6d0fde48f56d894dc722fb029d7"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "f9cdcdbff1f5de85380ae526977e683726c2aa42db1ed6e6e50ae89e496e95fd"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "453d9eb016259dc4582c206687ab9463b569680e89337df80d1a8bd08c3ea73b50ea84eec23afea76cc060b998b450f00d506b92d724f60c721a81b2189c6c33"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "741f1089335d6be517b37c316bbd5ad822ab03150357972c7cf95b7bae22b295803faea7a2c5fd6c1e90d682c821115b"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "56aac846ad829fb124b5c54c9c9ece9553b28107d3f3fad0aefbd56a660948a3815c1e2ce2bb338ecd928afc861c6c71"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "8c4b7a8332528cc9ae0ea9f5d161522a091f4ceb3beafe1f1846ee02572baa35"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "4c6d0dfd389e334d73c2385ebb9ea392f861bb143acf916af68a6a6b0eda3485dd41a1eb658551e358d406c30a7ffa50d2c8a10a64a76417099eb21bafe18e6b"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib@1.9.25?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://kotlinlang.org/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/JetBrains/kotlin"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib@1.9.25?type=jar"
+    },
+    {
+      "group" : "org.jetbrains",
+      "name" : "annotations",
+      "version" : "13.0",
+      "description" : "A set of annotations used for code inspection support and code documentation.",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "f4fb462172517b46b6cd90003508515a"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "919f0dfe192fb4e063e7dacadee7f8bb9a2672a9"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "5622d0ffe410e7272e2bb9fae1006caedeb86d0c62d2d9f3929a3b3cdcdef1963218fcf0cede82e95ef9f4da3ed4a173fa055ee6e4038886376181e0423e02ff"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "6bcde3a6e471d416522e6288474bc4f9115e2e8abf8ce5d300829bee4aa98dff73be7d8c6f0607f3d6d423c7f5abbf90"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "f4d5a5d5a76b24c4751c8c52f2879b097d2430c3571c59b4630e8c871c9bdb08e24e803a14c24fc8d3378417f29b7244"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "b4a80ea81c4bc7e364e07981465f547e8ed83031806eaf3b97dfb38f894f5b6f"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "15b23bce818b4399b334dd632eb85de5a1b70c47fb9260561e70b1f726211c83bddbc957f3b4c32a1d8c687f9bc6c38d0a638c731cb5daf5b619aa725d6050c2"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.jetbrains/annotations@13.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "http://www.jetbrains.org"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "http://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/JetBrains/intellij-community"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.jetbrains/annotations@13.0?type=jar"
+    },
+    {
+      "group" : "org.jetbrains.kotlin",
+      "name" : "kotlin-stdlib-jdk7",
+      "version" : "1.9.25",
+      "description" : "Kotlin Standard Library JDK 7 extension",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "00b574c013f45be45599d071dbd818f4"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "1c166692314a2639e5edfed0d23ed7eee4a5c7a5"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "fb5373dd761b4e93e3f538c5e853bba38a71143a181536e8f193ed6e4eddb3b8"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "3d529f26e14735d7dba2ad126d7cf2e92904daf7e71610563acb6bb13a58fe89437b4ea1f2f1a0f1abd985333709198e257540b08b1509293b5c75d19e001957"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "de4e79aa327c38bb12be59cf5437612823a2d450b4f698623bd3729efc65391a3a676e0e456198fcd436e5cb8a41f3b2"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "9491aa784d899e9d12c0756d0c6f8191199d6749ec7a390566e18c78c4538800624aee51fa8dbf5d2a1f9cd1568deded"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "b3243e23996177a8b854642a3f1fdb4c00f235ad7724145fd66081fe6c9f99f7"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "b0d110ee0a23e6cbcb7e34d5bdffd1c8e5b84fbfd93fa7f6f58058dec8bbda946dac030d14b35250e10dc9f61b91045eb8bff32d37cb611a74ba5985d7072899"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk7@1.9.25?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://kotlinlang.org/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/JetBrains/kotlin"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk7@1.9.25?type=jar"
+    },
+    {
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-databind",
+      "version" : "2.17.2",
+      "description" : "General data-binding functionality for Jackson: works on core streaming API",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "3e1ff7c1f0fda885946619a47ef9d5de"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "e6deb029e5901e027c129341fac39e515066b68c"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "c04993f33c0f845342653784f14f38373d005280e6359db5f808701cfae73c0c"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "ec62267bf58aea531ec7f253e67974fac89e8aa61e7b54a7fb00edf3132ecb969b510630fd353adbbd2ab7d845a25702f168c296c57983a00bd6abc9ce3630f9"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "d2de4602f779a456d0037f9d64efa8bcf9a1a9f06e3c628b2a3b2313319e22209cdfab9157f9251243bc05da870bdcf4"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "14618ad7737700ccd941feefd0bbbb7235ecbc1ac0cf22ba1bd72155eb68a800e98fe72f6ea03ab71cb9927a1d117d39"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "800f9886351c0968d6640e9c7e312c963b0146022fcfc27b173d06fe0c581041"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "49ff7e89ab8936043ac9371cc05c57bf88899a91ca11bd50227c58da9e6716c270e38c34bade5ba5cf39ed6443edf538bd25e85127c3e22f6788b84e14f3019a"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.17.2?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-databind/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/FasterXML/jackson-databind"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.17.2?type=jar"
+    },
+    {
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-annotations",
+      "version" : "2.17.2",
+      "description" : "Core annotations used for value types, used by Jackson data binding package.",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "e68e7e593ae47e106421688707683297"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "147b7b9412ffff24339f8aba080b292448e08698"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "873a606e23507969f9bbbea939d5e19274a88775ea5a169ba7e2d795aa5156e1"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "006d3a054b22daa7f378b005cc29b3544dc7f3b509176e0eac946e0a3bafa73b824bae61b5183b61938b19044d2142a285da2fce2ffdaef5bfe91b2d8dcb6804"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "edb09e196ede070ba1ab1b99e96be6049f60b664eb89e60e28f08327e510e7aedf8c4696bc719113d24fe3367b8b89b7"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "9c54c25762e7b5e05c5e17deaa35ef5b9af764fb3e19bd790479920d9fb7084f3e89dd2ea2ef2fd680e72aebe74ab271"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "5d1625676fc95b4625ef73658e47074a24804518d1455a610ff40b3017b1b86e"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "b4354ed913789689ac4f7dc7385aa2de383324a6b8ff59a2497b6b605c2451bec372c8a4335189c916b24c7a68e83102e0f53fca54c2389f2006ccc84a5eaa17"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.17.2?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-annotations/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/FasterXML/jackson-annotations"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.17.2?type=jar"
+    },
+    {
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-core",
+      "version" : "2.17.2",
+      "description" : "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "50c2dab1f29136714d5ef5c6c640336c"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "969a35cb35c86512acbadcdbbbfb044c877db814"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "721a189241dab0525d9e858e5cb604d3ecc0ede081e2de77d6f34fa5779a5b46"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "694ae3bf756421d925f833f59a6309c7748ac3a68b28ed4de8ce0d6f93347dfc19991d1106db911c7da78e20734e6f44a02caef751150378a6ffa638c80fc75b"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "acc969e3c312f9d2694e3202eb601dbe2317cb9a444dcb67f6e0f00871f6d5593bebcba272afab55f2541c6a7a107842"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "890610781e8f8c3c1283d8f6bd446d19dd5d83107a852f1446d5d2a4fdb57ff611b36b2267eba46746a305607c5e586a"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "a4b8acc3fd90cc86a9a1507a3e51abf984521f9189218f17a3b551e0a7ccdf44"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "f55e7d0b7a68919c8f8d3b5472796ecb82df852a97b1bb4bb0b45d1f9408d50545b717e8632f7ff975b77541e4d4b35de6ed32eeaff556677227b0985a74172b"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.17.2?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson-core"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-core/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/FasterXML/jackson-core"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.17.2?type=jar"
+    },
+    {
       "publisher" : "Apryse Group NV",
       "group" : "com.itextpdf",
       "name" : "itext-core",
@@ -8413,6 +8905,8 @@
         "pkg:maven/io.jsonwebtoken/jjwt-jackson@0.11.5?type=jar",
         "pkg:maven/org.springframework.boot/spring-boot-starter-webflux@3.3.4?type=jar",
         "pkg:maven/org.modelmapper/modelmapper@3.0.0?type=jar",
+        "pkg:maven/com.squareup.okhttp3/okhttp@4.12.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.17.2?type=jar",
         "pkg:maven/com.itextpdf/itext-core@9.0.0?type=pom"
       ]
     },
@@ -9156,6 +9650,53 @@
     },
     {
       "ref" : "pkg:maven/org.modelmapper/modelmapper@3.0.0?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/com.squareup.okhttp3/okhttp@4.12.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/com.squareup.okio/okio@3.6.0?type=jar",
+        "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk8@1.9.25?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/com.squareup.okio/okio@3.6.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/com.squareup.okio/okio-jvm@3.6.0?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/com.squareup.okio/okio-jvm@3.6.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk8@1.9.25?type=jar",
+        "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-common@1.9.25?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk8@1.9.25?type=jar",
+      "dependsOn" : [
+        "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib@1.9.25?type=jar",
+        "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk7@1.9.25?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib@1.9.25?type=jar",
+      "dependsOn" : [
+        "pkg:maven/org.jetbrains/annotations@13.0?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.jetbrains/annotations@13.0?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk7@1.9.25?type=jar",
+      "dependsOn" : [
+        "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib@1.9.25?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-common@1.9.25?type=jar",
       "dependsOn" : [ ]
     },
     {

@@ -1,8 +1,8 @@
 package com.vocacional.prestamoinso.Component;
 
 import com.vocacional.prestamoinso.Entity.enums.ERole;
-import com.vocacional.prestamoinso.Repository.TrabajadorRepository;
-import com.vocacional.prestamoinso.Repository.UserRepository;
+import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.UserSupabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public class TrabajadorInitializer implements CommandLineRunner {
 
     @Autowired
-    private TrabajadorRepository trabajadorRepository;
+    private TrabajadorSupabaseService trabajadorSupabaseService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserSupabaseService userSupabaseService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -28,9 +28,9 @@ public class TrabajadorInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try {
             // Verificar si ya existe un trabajador admin
-            if (!trabajadorRepository.findByUsername("admin").isPresent()) {
+            if (!trabajadorSupabaseService.findByUsername("admin").isPresent()) {
                 // Verificar si existe en la tabla users
-                var existingUser = userRepository.findByUsername("admin");
+                var existingUser = userSupabaseService.findByUsername("admin");
                 if (existingUser != null) {
                     // El usuario existe en users pero no en trabajador
                     // Insertar directamente en la tabla trabajador usando SQL nativo
@@ -52,7 +52,7 @@ public class TrabajadorInitializer implements CommandLineRunner {
                     jdbcTemplate.update(insertUserSql, "Admin", "Sistema", "admin", "admin@sistema.com", encryptedPassword, "ADMIN");
                     
                     // Obtener el ID del usuario recién creado
-                    var newUser = userRepository.findByUsername("admin");
+                    var newUser = userSupabaseService.findByUsername("admin");
                     if (newUser != null) {
                         // Insertar en la tabla trabajador
                         String insertTrabajadorSql = "INSERT INTO trabajador (id, needs_password_change) VALUES (?, ?)";

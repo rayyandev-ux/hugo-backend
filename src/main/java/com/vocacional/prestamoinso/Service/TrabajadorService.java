@@ -3,8 +3,8 @@ package com.vocacional.prestamoinso.Service;
 
 import com.vocacional.prestamoinso.Entity.Trabajador;
 import com.vocacional.prestamoinso.Entity.User;
-import com.vocacional.prestamoinso.Repository.TrabajadorRepository;
-import com.vocacional.prestamoinso.Repository.UserRepository;
+import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
+import com.vocacional.prestamoinso.Service.UserSupabaseService;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,50 +26,49 @@ public class TrabajadorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private TrabajadorRepository trabajadorRepository;
+    private TrabajadorSupabaseService trabajadorSupabaseService;
     @Autowired
-    private UserRepository userRepository;
+    private UserSupabaseService userSupabaseService;
     @Autowired
     private JavaMailSenderImpl mailSender;
 
 
     public void deleteUser(Long id) throws Exception {
-        Trabajador trabajador = trabajadorRepository.findById(id)
+        Trabajador trabajador = trabajadorSupabaseService.findById(id)
                 .orElseThrow(() -> new Exception("Usuario no encontrado con id: " + id));
 
-        trabajadorRepository.delete(trabajador);
+        trabajadorSupabaseService.delete(trabajador);
     }
 
 
     public void generateResetPasswordToken(String email) throws Exception {
-        User user = userRepository.findByEmail(email);
+        User user = userSupabaseService.findByEmail(email);
         if (user == null) {
             throw new Exception("No se encontró un usuario con ese correo.");
         }
 
         String token = UUID.randomUUID().toString();
         user.setResetPasswordToken(token);
-        userRepository.save(user);
-
+        userSupabaseService.save(user);
 
         sendResetPasswordEmail(user.getEmail(), token);
     }
 
     public void resetPassword(String token, String newPassword) throws Exception {
-        Optional<Trabajador> optionalTrabajador = trabajadorRepository.findByResetPasswordToken(token);
+        Optional<Trabajador> optionalTrabajador = trabajadorSupabaseService.findByResetPasswordToken(token);
         if (optionalTrabajador.isPresent()) {
             Trabajador trabajador = optionalTrabajador.get();
             trabajador.setPassword(passwordEncoder.encode(newPassword));
             trabajador.setResetPasswordToken(null);
             trabajador.setNeedsPasswordChange(false);
-            trabajadorRepository.save(trabajador);
+            trabajadorSupabaseService.save(trabajador);
         } else {
             throw new Exception("Token de recuperación inválido o expirado");
         }
     }
 
     public java.util.List<Trabajador> listarTodos() {
-        return trabajadorRepository.findAll();
+        return trabajadorSupabaseService.findAll();
     }
 
     private void sendResetPasswordEmail(String email, String token) throws Exception {

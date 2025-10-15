@@ -7,8 +7,8 @@ import com.vocacional.prestamoinso.Entity.Cliente;
 import com.vocacional.prestamoinso.Entity.CronogramaPagos;
 import com.vocacional.prestamoinso.Entity.Prestamo;
 import com.vocacional.prestamoinso.Mapper.PrestamoMapper;
-import com.vocacional.prestamoinso.Repository.ClienteRepository;
-import com.vocacional.prestamoinso.Repository.PrestamoRepository;
+import com.vocacional.prestamoinso.Service.ClienteSupabaseService;
+import com.vocacional.prestamoinso.Service.PrestamoSupabaseService;
 import com.vocacional.prestamoinso.Service.ClienteService;
 import com.vocacional.prestamoinso.Service.PrestamoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,9 @@ public class PrestamoController {
     private ClienteService clienteService;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteSupabaseService clienteSupabaseService;
+    @Autowired
+    private PrestamoSupabaseService prestamoSupabaseService;
     @Autowired
     private PrestamoMapper prestamoMapper;
 
@@ -89,7 +91,7 @@ public class PrestamoController {
         }
 
         // Verificar si el cliente existe en la base de datos
-        Cliente cliente = clienteRepository.findByNroDocumento(request.getNroDocumento());
+        Cliente cliente = clienteSupabaseService.findByNroDocumento(request.getNroDocumento());
         if (cliente == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Collections.singletonMap("mensaje", "Cliente no encontrado."));

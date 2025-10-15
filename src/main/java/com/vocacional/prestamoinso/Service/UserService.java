@@ -7,7 +7,7 @@ import com.vocacional.prestamoinso.Entity.Trabajador;
 import com.vocacional.prestamoinso.Entity.User;
 import com.vocacional.prestamoinso.Entity.enums.ERole;
 import com.vocacional.prestamoinso.Mapper.TrabajadorMappper;
-import com.vocacional.prestamoinso.Repository.UserRepository;
+import com.vocacional.prestamoinso.Service.TrabajadorSupabaseService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +16,12 @@ public class UserService {
 
 
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final TrabajadorSupabaseService trabajadorSupabaseService;
     private final TrabajadorMappper trabajadorMappper;
 
-    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, TrabajadorMappper trabajadorMappper) {
+    public UserService(PasswordEncoder passwordEncoder, TrabajadorSupabaseService trabajadorSupabaseService, TrabajadorMappper trabajadorMappper) {
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
+        this.trabajadorSupabaseService = trabajadorSupabaseService;
         this.trabajadorMappper = trabajadorMappper;
     }
 
@@ -34,7 +34,7 @@ public class UserService {
         trabajador.setEmail(trabajadorDTO.getEmail());
         trabajador.setPassword(passwordEncoder.encode(trabajadorDTO.getPassword()));
         trabajador.setRole(eRole);
-        trabajador = userRepository.save(trabajador);
+        trabajador = trabajadorSupabaseService.save(trabajador);
         return trabajadorMappper.toDTO(trabajador);
     }
 
@@ -48,7 +48,7 @@ public class UserService {
         trabajador.setEmail(trabajadorDTO.getEmail());
         trabajador.setPassword(passwordEncoder.encode(trabajadorDTO.getPassword()));
         trabajador.setRole(eRole);
-        trabajador = userRepository.save(trabajador);
+        trabajador = trabajadorSupabaseService.save(trabajador);
         return trabajadorMappper.toDTO(trabajador);
     }
 }
