@@ -20,7 +20,7 @@ public class UserSupabaseService {
     @Autowired
     private SupabaseService supabaseService;
     
-    @Autowired
+    @Autowired(required = false)
     private JdbcTemplate jdbcTemplate;
 
     private static final String TABLE_NAME = "users";

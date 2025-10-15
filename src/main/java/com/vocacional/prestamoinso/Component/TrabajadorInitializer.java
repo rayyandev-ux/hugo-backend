@@ -21,12 +21,21 @@ public class TrabajadorInitializer implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Autowired(required = false)
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public void run(String... args) throws Exception {
         try {
+            System.out.println("=== INICIALIZANDO TRABAJADOR ADMIN ===");
+            
+            // Verificar si JdbcTemplate está disponible
+            if (jdbcTemplate == null) {
+                System.out.println("JdbcTemplate no está disponible - saltando inicialización directa de trabajador");
+                System.out.println("El usuario admin debe ser creado manualmente en Supabase");
+                return;
+            }
+            
             // Verificar si ya existe un trabajador admin
             if (!trabajadorSupabaseService.findByUsername("admin").isPresent()) {
                 // Verificar si existe en la tabla users

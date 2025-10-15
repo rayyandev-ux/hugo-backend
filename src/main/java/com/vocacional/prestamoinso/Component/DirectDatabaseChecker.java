@@ -13,13 +13,19 @@ import java.util.Map;
 @Order(4) // Ejecutar después del SupabaseDebugger
 public class DirectDatabaseChecker implements CommandLineRunner {
 
-    @Autowired
+    @Autowired(required = false)
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public void run(String... args) throws Exception {
         try {
             System.out.println("=== VERIFICACIÓN DIRECTA DE BASE DE DATOS ===");
+            
+            // Verificar si JdbcTemplate está disponible
+            if (jdbcTemplate == null) {
+                System.out.println("JdbcTemplate no está disponible - usando solo API REST de Supabase");
+                return;
+            }
             
             // 1. Verificar si la tabla users existe
             System.out.println("1. Verificando existencia de tabla users:");

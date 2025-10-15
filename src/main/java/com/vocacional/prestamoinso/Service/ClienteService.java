@@ -28,7 +28,7 @@ public class ClienteService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Autowired(required = false)
     private ClienteRepository clienteRepository;
 
     public Cliente registrarCliente(ClienteDTO registroClienteDTO) {
@@ -37,6 +37,11 @@ public class ClienteService {
         // Validar que nroDocumento no sea null o vacío
         if (nroDocumento == null || nroDocumento.trim().isEmpty()) {
             throw new RuntimeException("El número de documento es requerido");
+        }
+        
+        // Verificar si el repositorio está disponible
+        if (clienteRepository == null) {
+            throw new RuntimeException("Servicio de base de datos no disponible. La aplicación está configurada para usar solo la API REST de Supabase.");
         }
         
         if (nroDocumento.length() == 11) {
