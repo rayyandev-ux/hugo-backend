@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vocacional.prestamoinso.Entity.Cliente;
 import com.vocacional.prestamoinso.Entity.Prestamo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,12 @@ import java.util.Optional;
 @Service
 public class PrestamoSupabaseService {
 
+    private static final Logger logger = LoggerFactory.getLogger(PrestamoSupabaseService.class);
+
     @Autowired
     private SupabaseService supabaseService;
 
-    private static final String TABLE_NAME = "prestamo";
+    private static final String TABLE_NAME = "prestamos";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -28,7 +32,7 @@ public class PrestamoSupabaseService {
             Prestamo prestamo = supabaseService.findById(TABLE_NAME, id, Prestamo.class);
             return Optional.ofNullable(prestamo);
         } catch (IOException e) {
-            System.err.println("Error al buscar préstamo por ID: " + e.getMessage());
+            logger.error("Error al buscar préstamo por ID: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
@@ -40,7 +44,7 @@ public class PrestamoSupabaseService {
         try {
             return supabaseService.findAllByField(TABLE_NAME, "nroDocumento", dni, Prestamo.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar préstamos por DNI: " + e.getMessage());
+            logger.error("Error al buscar préstamos por DNI: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -68,7 +72,7 @@ public class PrestamoSupabaseService {
             }
             return total;
         } catch (IOException e) {
-            System.err.println("Error al obtener total de préstamos mensuales: " + e.getMessage());
+            logger.error("Error al obtener total de préstamos mensuales: {}", e.getMessage(), e);
             return 0.0;
         }
     }
@@ -80,7 +84,7 @@ public class PrestamoSupabaseService {
         try {
             return supabaseService.findAllOrderByFechaCreacionDesc(TABLE_NAME, Prestamo.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar préstamos ordenados: " + e.getMessage());
+            logger.error("Error al buscar préstamos ordenados: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -92,7 +96,7 @@ public class PrestamoSupabaseService {
         try {
             return supabaseService.findAllByTwoFields(TABLE_NAME, "cliente_id", cliente.getId().toString(), "estado", estado, Prestamo.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar préstamos por cliente y estado: " + e.getMessage());
+            logger.error("Error al buscar préstamos por cliente y estado: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -104,7 +108,7 @@ public class PrestamoSupabaseService {
         try {
             return supabaseService.findAllByField(TABLE_NAME, "estado", estado, Prestamo.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar préstamos por estado: " + e.getMessage());
+            logger.error("Error al buscar préstamos por estado: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -116,7 +120,7 @@ public class PrestamoSupabaseService {
         try {
             return supabaseService.findAll(TABLE_NAME, Prestamo.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar todos los préstamos: " + e.getMessage());
+            logger.error("Error al buscar todos los préstamos: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -135,7 +139,7 @@ public class PrestamoSupabaseService {
                 return supabaseService.updateById(TABLE_NAME, prestamo.getId(), prestamo, Prestamo.class);
             }
         } catch (IOException e) {
-            System.err.println("Error al guardar préstamo: " + e.getMessage());
+            logger.error("Error al guardar préstamo: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -147,7 +151,7 @@ public class PrestamoSupabaseService {
         try {
             supabaseService.deleteById(TABLE_NAME, id);
         } catch (IOException e) {
-            System.err.println("Error al eliminar préstamo: " + e.getMessage());
+            logger.error("Error al eliminar préstamo: {}", e.getMessage(), e);
         }
     }
 
@@ -168,8 +172,8 @@ public class PrestamoSupabaseService {
             List<Prestamo> prestamos = findAll();
             return prestamos.size();
         } catch (Exception e) {
-            System.err.println("Error al contar préstamos: " + e.getMessage());
-            return 0;
+            logger.error("Error al contar préstamos: {}", e.getMessage(), e);
+            return 0L;
         }
     }
 }

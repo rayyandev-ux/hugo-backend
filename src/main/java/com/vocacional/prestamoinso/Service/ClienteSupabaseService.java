@@ -1,6 +1,8 @@
 package com.vocacional.prestamoinso.Service;
 
 import com.vocacional.prestamoinso.Entity.Cliente;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import java.util.Optional;
 @Service
 public class ClienteSupabaseService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ClienteSupabaseService.class);
+
     @Autowired
     private SupabaseService supabaseService;
 
-    private static final String TABLE_NAME = "cliente";
+    private static final String TABLE_NAME = "clientes";
 
     /**
      * Busca un cliente por ID
@@ -24,7 +28,7 @@ public class ClienteSupabaseService {
             Cliente cliente = supabaseService.findById(TABLE_NAME, id, Cliente.class);
             return Optional.ofNullable(cliente);
         } catch (IOException e) {
-            System.err.println("Error al buscar cliente por ID: " + e.getMessage());
+            logger.error("Error al buscar cliente por ID: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
@@ -36,7 +40,7 @@ public class ClienteSupabaseService {
         try {
             return supabaseService.findByField(TABLE_NAME, "nroDocumento", nroDocumento, Cliente.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar cliente por número de documento: " + e.getMessage());
+            logger.error("Error al buscar cliente por número de documento: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -48,7 +52,7 @@ public class ClienteSupabaseService {
         try {
             return supabaseService.existsByField(TABLE_NAME, "nroDocumento", nroDocumento);
         } catch (IOException e) {
-            System.err.println("Error al verificar existencia de cliente: " + e.getMessage());
+            logger.error("Error al verificar existencia de cliente: {}", e.getMessage(), e);
             return false;
         }
     }
@@ -60,7 +64,7 @@ public class ClienteSupabaseService {
         try {
             return supabaseService.findAll(TABLE_NAME, Cliente.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar todos los clientes: " + e.getMessage());
+            logger.error("Error al buscar todos los clientes: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -79,7 +83,7 @@ public class ClienteSupabaseService {
                 return supabaseService.updateById(TABLE_NAME, cliente.getId(), cliente, Cliente.class);
             }
         } catch (IOException e) {
-            System.err.println("Error al guardar cliente: " + e.getMessage());
+            logger.error("Error al guardar cliente: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -91,7 +95,7 @@ public class ClienteSupabaseService {
         try {
             supabaseService.deleteById(TABLE_NAME, id);
         } catch (IOException e) {
-            System.err.println("Error al eliminar cliente: " + e.getMessage());
+            logger.error("Error al eliminar cliente: {}", e.getMessage(), e);
         }
     }
 
@@ -112,8 +116,8 @@ public class ClienteSupabaseService {
             List<Cliente> clientes = findAll();
             return clientes.size();
         } catch (Exception e) {
-            System.err.println("Error al contar clientes: " + e.getMessage());
-            return 0;
+            logger.error("Error al contar clientes: {}", e.getMessage(), e);
+            return 0L;
         }
     }
 }

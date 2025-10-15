@@ -2,6 +2,8 @@ package com.vocacional.prestamoinso.Service;
 
 import com.vocacional.prestamoinso.Entity.CronogramaPagos;
 import com.vocacional.prestamoinso.Entity.Prestamo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class CronogramaPagosSupabaseService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CronogramaPagosSupabaseService.class);
 
     @Autowired
     private SupabaseService supabaseService;
@@ -26,7 +30,7 @@ public class CronogramaPagosSupabaseService {
             CronogramaPagos cronogramaPagos = supabaseService.findById(TABLE_NAME, id, CronogramaPagos.class);
             return Optional.ofNullable(cronogramaPagos);
         } catch (IOException e) {
-            System.err.println("Error al buscar cronograma de pagos por ID: " + e.getMessage());
+            logger.error("Error al buscar cronograma de pagos por ID: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
@@ -43,7 +47,7 @@ public class CronogramaPagosSupabaseService {
                 return supabaseService.updateById(TABLE_NAME, cronogramaPagos.getId(), cronogramaPagos, CronogramaPagos.class);
             }
         } catch (IOException e) {
-            System.err.println("Error al guardar cronograma de pagos: " + e.getMessage());
+            logger.error("Error al guardar cronograma de pagos: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -56,7 +60,7 @@ public class CronogramaPagosSupabaseService {
             String filter = "prestamo_id=eq." + prestamoId + "&estado=eq." + estado + "&order=fecha_pago.asc";
             return supabaseService.findByFilter(TABLE_NAME, filter, CronogramaPagos.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar cronograma por prestamo ID y estado: " + e.getMessage());
+            logger.error("Error al buscar cronograma por prestamo ID y estado: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -69,7 +73,7 @@ public class CronogramaPagosSupabaseService {
             String filter = "prestamo_id=eq." + prestamoId;
             return supabaseService.findByFilter(TABLE_NAME, filter, CronogramaPagos.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar cronograma por prestamo ID: " + e.getMessage());
+            logger.error("Error al buscar cronograma por prestamo ID: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -82,7 +86,7 @@ public class CronogramaPagosSupabaseService {
             String filter = "prestamo_id=eq." + prestamo.getId() + "&estado=eq." + estado;
             return supabaseService.findByFilter(TABLE_NAME, filter, CronogramaPagos.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar cronograma por prestamo y estado: " + e.getMessage());
+            logger.error("Error al buscar cronograma por prestamo y estado: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -98,7 +102,7 @@ public class CronogramaPagosSupabaseService {
                     .mapToDouble(CronogramaPagos::getMontoCuota)
                     .sum();
         } catch (IOException e) {
-            System.err.println("Error al obtener total de pagos del prestamo: " + e.getMessage());
+            logger.error("Error al obtener total de pagos del prestamo: {}", e.getMessage(), e);
             return 0.0;
         }
     }
@@ -124,7 +128,7 @@ public class CronogramaPagosSupabaseService {
         try {
             supabaseService.deleteById(TABLE_NAME, id);
         } catch (IOException e) {
-            System.err.println("Error al eliminar cronograma de pagos: " + e.getMessage());
+            logger.error("Error al eliminar cronograma de pagos: {}", e.getMessage(), e);
         }
     }
 
@@ -135,7 +139,7 @@ public class CronogramaPagosSupabaseService {
         try {
             return supabaseService.findAll(TABLE_NAME, CronogramaPagos.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar todos los cronogramas de pagos: " + e.getMessage());
+            logger.error("Error al buscar todos los cronogramas de pagos: {}", e.getMessage(), e);
             return List.of();
         }
     }

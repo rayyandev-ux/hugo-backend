@@ -1,6 +1,9 @@
 package com.vocacional.prestamoinso.Service;
 
 import com.vocacional.prestamoinso.Entity.Trabajador;
+import com.vocacional.prestamoinso.Entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class TrabajadorSupabaseService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TrabajadorSupabaseService.class);
 
     @Autowired
     private SupabaseService supabaseService;
@@ -24,7 +29,7 @@ public class TrabajadorSupabaseService {
             Trabajador trabajador = supabaseService.findById(TABLE_NAME, id, Trabajador.class);
             return Optional.ofNullable(trabajador);
         } catch (IOException e) {
-            System.err.println("Error al buscar trabajador por ID: " + e.getMessage());
+            logger.error("Error al buscar trabajador por ID: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
@@ -37,33 +42,73 @@ public class TrabajadorSupabaseService {
             Trabajador trabajador = supabaseService.findByTwoFields(TABLE_NAME, "nombre", nombre, "apellido", apellido, Trabajador.class);
             return Optional.ofNullable(trabajador);
         } catch (IOException e) {
-            System.err.println("Error al buscar trabajador por nombre y apellido: " + e.getMessage());
-            return Optional.empty();
+            logger.error("Error al buscar trabajador por nombre y apellido: {}", e.getMessage(), e);
+            return null;
         }
     }
 
     /**
      * Busca un trabajador por username
+     * Como Trabajador extiende User, buscamos en la tabla users y luego verificamos si es trabajador
      */
     public Optional<Trabajador> findByUsername(String username) {
         try {
-            Trabajador trabajador = supabaseService.findByField(TABLE_NAME, "username", username, Trabajador.class);
+            // Primero buscar el usuario en la tabla users
+            User user = supabaseService.findByField("users", "username", username, User.class);
+            if (user == null) {
+                return Optional.empty();
+            }
+            
+            // Luego verificar si existe en la tabla trabajador
+            Trabajador trabajador = supabaseService.findById(TABLE_NAME, user.getId(), Trabajador.class);
+            if (trabajador != null) {
+                // Copiar los datos del usuario al trabajador
+                trabajador.setId(user.getId());
+                trabajador.setNombre(user.getNombre());
+                trabajador.setApellido(user.getApellido());
+                trabajador.setUsername(user.getUsername());
+                trabajador.setEmail(user.getEmail());
+                trabajador.setPassword(user.getPassword());
+                trabajador.setRole(user.getRole());
+                trabajador.setResetPasswordToken(user.getResetPasswordToken());
+            }
+            
             return Optional.ofNullable(trabajador);
         } catch (IOException e) {
-            System.err.println("Error al buscar trabajador por username: " + e.getMessage());
+            logger.error("Error al buscar trabajador por username: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
 
     /**
      * Busca un trabajador por token de reset de contraseña
+     * Como Trabajador extiende User, buscamos en la tabla users por el token
      */
     public Optional<Trabajador> findByResetPasswordToken(String token) {
         try {
-            Trabajador trabajador = supabaseService.findByField(TABLE_NAME, "resetPasswordToken", token, Trabajador.class);
+            // Primero buscar el usuario en la tabla users por token
+            User user = supabaseService.findByField("users", "reset_password_token", token, User.class);
+            if (user == null) {
+                return Optional.empty();
+            }
+            
+            // Luego verificar si existe en la tabla trabajador
+            Trabajador trabajador = supabaseService.findById(TABLE_NAME, user.getId(), Trabajador.class);
+            if (trabajador != null) {
+                // Copiar los datos del usuario al trabajador
+                trabajador.setId(user.getId());
+                trabajador.setNombre(user.getNombre());
+                trabajador.setApellido(user.getApellido());
+                trabajador.setUsername(user.getUsername());
+                trabajador.setEmail(user.getEmail());
+                trabajador.setPassword(user.getPassword());
+                trabajador.setRole(user.getRole());
+                trabajador.setResetPasswordToken(user.getResetPasswordToken());
+            }
+            
             return Optional.ofNullable(trabajador);
         } catch (IOException e) {
-            System.err.println("Error al buscar trabajador por token: " + e.getMessage());
+            logger.error("Error al buscar trabajador por token: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
@@ -75,7 +120,7 @@ public class TrabajadorSupabaseService {
         try {
             return supabaseService.findAll(TABLE_NAME, Trabajador.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar todos los trabajadores: " + e.getMessage());
+            logger.error("Error al buscar todos los trabajadores: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -94,7 +139,7 @@ public class TrabajadorSupabaseService {
                 return supabaseService.updateById(TABLE_NAME, trabajador.getId(), trabajador, Trabajador.class);
             }
         } catch (IOException e) {
-            System.err.println("Error al guardar trabajador: " + e.getMessage());
+            logger.error("Error al guardar trabajador: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -106,7 +151,7 @@ public class TrabajadorSupabaseService {
         try {
             supabaseService.deleteById(TABLE_NAME, id);
         } catch (IOException e) {
-            System.err.println("Error al eliminar trabajador: " + e.getMessage());
+            logger.error("Error al eliminar trabajador: {}", e.getMessage(), e);
         }
     }
 
@@ -127,8 +172,8 @@ public class TrabajadorSupabaseService {
             List<Trabajador> trabajadores = findAll();
             return trabajadores.size();
         } catch (Exception e) {
-            System.err.println("Error al contar trabajadores: " + e.getMessage());
-            return 0;
+            logger.error("Error al contar trabajadores: {}", e.getMessage(), e);
+            return 0L;
         }
     }
 }

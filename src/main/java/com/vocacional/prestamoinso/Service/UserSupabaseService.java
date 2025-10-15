@@ -1,6 +1,8 @@
 package com.vocacional.prestamoinso.Service;
 
 import com.vocacional.prestamoinso.Entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import java.util.Optional;
 
 @Service
 public class UserSupabaseService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserSupabaseService.class);
 
     @Autowired
     private SupabaseService supabaseService;
@@ -24,7 +28,7 @@ public class UserSupabaseService {
             User user = supabaseService.findById(TABLE_NAME, id, User.class);
             return Optional.ofNullable(user);
         } catch (IOException e) {
-            System.err.println("Error al buscar usuario por ID: " + e.getMessage());
+            logger.error("Error al buscar usuario por ID: {}", e.getMessage(), e);
             return Optional.empty();
         }
     }
@@ -36,7 +40,7 @@ public class UserSupabaseService {
         try {
             return supabaseService.findByField(TABLE_NAME, "username", username, User.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar usuario por username: " + e.getMessage());
+            logger.error("Error al buscar usuario por username: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -48,7 +52,7 @@ public class UserSupabaseService {
         try {
             return supabaseService.findByField(TABLE_NAME, "email", email, User.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar usuario por email: " + e.getMessage());
+            logger.error("Error al buscar usuario por email: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -58,9 +62,9 @@ public class UserSupabaseService {
      */
     public User findByResetPasswordToken(String token) {
         try {
-            return supabaseService.findByField(TABLE_NAME, "resetPasswordToken", token, User.class);
+            return supabaseService.findByField(TABLE_NAME, "reset_password_token", token, User.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar usuario por token: " + e.getMessage());
+            logger.error("Error al buscar usuario por token: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -72,7 +76,7 @@ public class UserSupabaseService {
         try {
             return supabaseService.findAll(TABLE_NAME, User.class);
         } catch (IOException e) {
-            System.err.println("Error al buscar todos los usuarios: " + e.getMessage());
+            logger.error("Error al buscar todos los usuarios: {}", e.getMessage(), e);
             return List.of();
         }
     }
@@ -91,7 +95,7 @@ public class UserSupabaseService {
                 return supabaseService.updateById(TABLE_NAME, user.getId(), user, User.class);
             }
         } catch (IOException e) {
-            System.err.println("Error al guardar usuario: " + e.getMessage());
+            logger.error("Error al guardar usuario: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -103,7 +107,7 @@ public class UserSupabaseService {
         try {
             supabaseService.deleteById(TABLE_NAME, id);
         } catch (IOException e) {
-            System.err.println("Error al eliminar usuario: " + e.getMessage());
+            logger.error("Error al eliminar usuario: {}", e.getMessage(), e);
         }
     }
 
@@ -124,8 +128,8 @@ public class UserSupabaseService {
             List<User> users = findAll();
             return users.size();
         } catch (Exception e) {
-            System.err.println("Error al contar usuarios: " + e.getMessage());
-            return 0;
+            logger.error("Error al contar usuarios: {}", e.getMessage(), e);
+            return 0L;
         }
     }
 }
