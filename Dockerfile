@@ -25,4 +25,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación
-CMD ["java", "-jar", "target/prestamo-inso-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "-Dspring.profiles.active=production", "target/prestamo-inso-0.0.1-SNAPSHOT.jar"]
