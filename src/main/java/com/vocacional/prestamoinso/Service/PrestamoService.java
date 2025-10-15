@@ -483,27 +483,22 @@ public class PrestamoService {
 
 
     private double calcularMontoCuota(Prestamo prestamo) {
-        double tasaMensual = 0;
+        // Usar el interés proporcionado por el usuario (ya viene como porcentaje mensual)
+        double tasaMensual = prestamo.getInteres() / 100.0;
+        double monto = prestamo.getMonto();
+        int plazo = prestamo.getPlazo();
 
-        // Condiciones para el plazo del préstamo
-        if (prestamo.getPlazo() == 1) {
-            // Convertimos la TEA del 10% a mensual
-            tasaMensual = Math.pow(1 + 0.10, 1.0 / 12) - 1; // 0.007974
-        } else if (prestamo.getPlazo() == 6) {
-            // Convertimos la TEA del 20% a mensual
-            tasaMensual = Math.pow(1 + 0.20, 1.0 / 12) - 1; // 0.01541
+        // Fórmula de cuota fija con interés compuesto (sistema francés)
+        // PMT = P * [r * (1 + r)^n] / [(1 + r)^n - 1]
+        if (tasaMensual == 0) {
+            // Si no hay interés, dividir el monto entre el plazo
+            return monto / plazo;
         }
 
-        // Redondear la tasa mensual a 6 decimales usando BigDecimal
-        BigDecimal tasaMensualRedondeada = new BigDecimal(tasaMensual).setScale(6, RoundingMode.HALF_UP);
+        double factor = Math.pow(1 + tasaMensual, plazo);
+        double cuotaMensual = monto * (tasaMensual * factor) / (factor - 1);
 
-        prestamo.setInteres(tasaMensualRedondeada.doubleValue() * 100);
-
-        // Cálculo del total a pagar con la tasa mensual
-        double totalPagar = prestamo.getMonto() * (1 + tasaMensualRedondeada.doubleValue() * prestamo.getPlazo());
-
-        // Calculamos la cuota mensual
-        return totalPagar / prestamo.getPlazo();
+        return cuotaMensual;
     }
 
     public List<Prestamo> findByClienteNroDocumento(String nro){
