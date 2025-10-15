@@ -1,19 +1,20 @@
 package com.vocacional.prestamoinso.Component;
 
 import com.vocacional.prestamoinso.Entity.User;
-import com.vocacional.prestamoinso.Service.UserSupabaseService;
+import com.vocacional.prestamoinso.Service.UserJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import java.util.Optional;
 
 @Component
 @Order(2) // Ejecutar después del TrabajadorInitializer
 public class AdminPasswordFixer implements CommandLineRunner {
 
     @Autowired
-    private UserSupabaseService userSupabaseService;
+    private UserJpaService userJpaService;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -23,10 +24,11 @@ public class AdminPasswordFixer implements CommandLineRunner {
         try {
             System.out.println("=== INICIANDO CORRECCIÓN DE CONTRASEÑA ADMIN ===");
             
-            // Buscar el usuario admin usando el servicio de Supabase
-            User adminUser = userSupabaseService.findByUsername("admin");
+            // Buscar el usuario admin usando el servicio JPA
+            Optional<User> adminUserOptional = userJpaService.findByUsername("admin");
             
-            if (adminUser != null) {
+            if (adminUserOptional.isPresent()) {
+                User adminUser = adminUserOptional.get();
                 System.out.println("=== INFORMACIÓN DETALLADA DEL USUARIO ADMIN ===");
                 System.out.println("ID: " + adminUser.getId());
                 System.out.println("Username: " + adminUser.getUsername());
@@ -40,9 +42,9 @@ public class AdminPasswordFixer implements CommandLineRunner {
                 String newPassword = "admin123";
                 String hashedPassword = passwordEncoder.encode(newPassword);
                 
-                // Actualizar la contraseña usando el servicio de Supabase
+                // Actualizar la contraseña usando el servicio JPA
                 adminUser.setPassword(hashedPassword);
-                userSupabaseService.save(adminUser);
+                userJpaService.save(adminUser);
                 
                 System.out.println("✅ Contraseña del usuario admin actualizada exitosamente");
                 System.out.println("✅ Nueva contraseña: " + newPassword);

@@ -1,7 +1,126 @@
-2025-10-15T09:10:12.250Z ERROR 1 --- [prestamo-inso] [           main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
-2025-10-15T09:10:12.251Z  WARN 1 --- [prestamo-inso] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
-2025-10-15T09:10:12.255Z  INFO 1 --- [prestamo-inso] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2025-10-15T09:10:12.552Z  INFO 1 --- [prestamo-inso] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2025-10-15T09:10:12.853Z ERROR 1 --- [prestamo-inso] [           main] o.s.boot.SpringApplication               : Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+#15 19.86 [WARNING] COMPILATION WARNING : 
+#15 19.86 [INFO] -------------------------------------------------------------
+#15 19.86 [WARNING] /app/src/main/java/com/vocacional/prestamoinso/Entity/Trabajador.java:[8,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+#15 19.86 [INFO] 1 warning
+#15 19.86 [INFO] -------------------------------------------------------------
+#15 19.86 [INFO] -------------------------------------------------------------
+#15 19.86 [ERROR] COMPILATION ERROR : 
+#15 19.86 [INFO] -------------------------------------------------------------
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/AdminPasswordFixer.java:[4,43] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: package com.vocacional.prestamoinso.Service
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/AdminPasswordFixer.java:[16,13] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Component.AdminPasswordFixer
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/CreateTestAdmin.java:[5,43] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: package com.vocacional.prestamoinso.Service
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/CreateTestAdmin.java:[16,13] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Component.CreateTestAdmin
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/TrabajadorInitializer.java:[5,43] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: package com.vocacional.prestamoinso.Service
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/TrabajadorInitializer.java:[19,13] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Component.TrabajadorInitializer
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/impl/UserDetailsServiceImpl.java:[6,43] cannot find symbol
+#15 19.86   symbol:   class UserSupabaseService
+#15 19.86   location: package com.vocacional.prestamoinso.Service
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/impl/UserDetailsServiceImpl.java:[20,13] cannot find symbol
+#15 19.86   symbol:   class UserJpaService
+#15 19.86   location: class com.vocacional.prestamoinso.Service.impl.UserDetailsServiceImpl
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/PrestamoService.java:[53,17] cannot find symbol
+#15 19.86   symbol:   class PrestamoConPagosDTO
+#15 19.86   location: class com.vocacional.prestamoinso.Service.PrestamoService
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/ClienteSupabaseService.java:[19,13] cannot find symbol
+#15 19.86   symbol:   class SupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Service.ClienteSupabaseService
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/CronogramaPagosSupabaseService.java:[21,13] cannot find symbol
+#15 19.86   symbol:   class SupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Service.CronogramaPagosSupabaseService
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/PrestamoSupabaseService.java:[22,13] cannot find symbol
+#15 19.86   symbol:   class SupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Service.PrestamoSupabaseService
+#15 19.86 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/TrabajadorSupabaseService.java:[20,13] cannot find symbol
+#15 19.86   symbol:   class SupabaseService
+#15 19.86   location: class com.vocacional.prestamoinso.Service.TrabajadorSupabaseService
+#15 19.86 [INFO] 13 errors 
+#15 19.86 [INFO] -------------------------------------------------------------
+#15 19.92 [INFO] ------------------------------------------------------------------------
+#15 19.92 [INFO] BUILD FAILURE
+#15 19.92 [INFO] ------------------------------------------------------------------------
+#15 19.92 [INFO] Total time:  17.988 s
+#15 19.92 [INFO] Finished at: 2025-10-15T16:35:21Z
+#15 19.92 [INFO] ------------------------------------------------------------------------
+#15 19.92 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project prestamo-inso: Compilation failure: Compilation failure: 
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/AdminPasswordFixer.java:[4,43] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.92 [ERROR]   location: package com.vocacional.prestamoinso.Service
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/AdminPasswordFixer.java:[16,13] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.92 [ERROR]   location: class com.vocacional.prestamoinso.Component.AdminPasswordFixer
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/CreateTestAdmin.java:[5,43] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.92 [ERROR]   location: package com.vocacional.prestamoinso.Service
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/CreateTestAdmin.java:[16,13] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.92 [ERROR]   location: class com.vocacional.prestamoinso.Component.CreateTestAdmin
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/TrabajadorInitializer.java:[5,43] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.92 [ERROR]   location: package com.vocacional.prestamoinso.Service
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Component/TrabajadorInitializer.java:[19,13] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.92 [ERROR]   location: class com.vocacional.prestamoinso.Component.TrabajadorInitializer
+#15 19.92 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/impl/UserDetailsServiceImpl.java:[6,43] cannot find symbol
+#15 19.92 [ERROR]   symbol:   class UserSupabaseService
+#15 19.93 [ERROR]   location: package com.vocacional.prestamoinso.Service
+#15 19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/impl/UserDetailsServiceImpl.java:[20,13] cannot find symbol
+#15 19.93 [ERROR]   symbol:   class UserJpaService
+#15 19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.impl.UserDetailsServiceImpl
+#15 19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/PrestamoService.java:[53,17] cannot find symbol
+#15 19.93 [ERROR]   symbol:   class PrestamoConPagosDTO
+#15 19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.PrestamoService
+#15 19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/ClienteSupabaseService.java:[19,13] cannot find symbol
+#15 19.93 [ERROR]   symbol:   class SupabaseService
+#15 19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.ClienteSupabaseService
+#15 19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/CronogramaPagosSupabaseService.java:[21,13] cannot find symbol
+#15 19.93 [ERROR]   symbol:   class SupabaseService
+#15 19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.CronogramaPagosSupabaseService
+#15 19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/PrestamoSupabaseService.java:[22,13] cannot find symbol
+#15 19.93 [ERROR]   symbol:   class SupabaseService
+#15 19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.PrestamoSupabaseService
+#15 19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/TrabajadorSupabaseService.java:[20,13] cannot find symbol
+#15 19.93 [ERROR]   symbol:   class SupabaseService
+#15 19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.TrabajadorSupabaseService
+#15 19.93 [ERROR] -> [Help 1]
+#15 19.93 [ERROR] 
+#15 19.93 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+#15 19.93 [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+#15 19.93 [ERROR] 
+#15 19.93 [ERROR] For more information about the errors and possible solutions, please read the following articles:
+#15 19.93 [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+#15 ERROR: process "/bin/sh -c ./mvnw clean package -DskipTests" did not complete successfully: exit code: 1
+------
+ > [9/9] RUN ./mvnw clean package -DskipTests:
+19.93 [ERROR] /app/src/main/java/com/vocacional/prestamoinso/Service/TrabajadorSupabaseService.java:[20,13] cannot find symbol
+19.93 [ERROR]   symbol:   class SupabaseService
+19.93 [ERROR]   location: class com.vocacional.prestamoinso.Service.TrabajadorSupabaseService
+19.93 [ERROR] -> [Help 1]
+19.93 [ERROR] 
+19.93 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+19.93 [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+19.93 [ERROR] 
+19.93 [ERROR] For more information about the errors and possible solutions, please read the following articles:
+19.93 [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+------
+Dockerfile:22
+--------------------
+  20 |     
+  21 |     # Construir la aplicación
+  22 | >>> RUN ./mvnw clean package -DskipTests
+  23 |     
+  24 |     # Exponer puerto
+--------------------
+error: failed to solve: process "/bin/sh -c ./mvnw clean package -DskipTests" did not complete successfully: exit code: 1
+error: exit status 1

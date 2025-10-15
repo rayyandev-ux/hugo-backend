@@ -10,6 +10,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import com.vocacional.prestamoinso.DTO.PrestamoConPagosDTO;
 import com.vocacional.prestamoinso.DTO.ReniecResponseDTO;
 import com.vocacional.prestamoinso.DTO.SunatResponseDTO;
 import com.vocacional.prestamoinso.Entity.Cliente;
@@ -57,18 +58,30 @@ public class PrestamoService {
         for (Prestamo prestamo : prestamos) {
             List<CronogramaPagos> pagosPendientes = cronogramaPagosJpaService.findByPrestamoIdAndEstadoOrderByFechaPagoAsc(prestamo.getId(), "Pendiente");
 
-
             if (!pagosPendientes.isEmpty()) {
-                prestamo.setCronogramaPagos(pagosPendientes);
-                prestamosConPagosPendientes.add(prestamo);
+                // Crear PrestamoConPagosDTO con los datos del préstamo y sus pagos pendientes
+                PrestamoConPagosDTO prestamoConPagos = new PrestamoConPagosDTO();
+                prestamoConPagos.setId(prestamo.getId());
+                prestamoConPagos.setCliente(prestamo.getCliente().getNombre() + 
+                    (prestamo.getCliente().getApellidoPaterno() != null ? " " + prestamo.getCliente().getApellidoPaterno() : "") +
+                    (prestamo.getCliente().getApellidoMaterno() != null ? " " + prestamo.getCliente().getApellidoMaterno() : ""));
+                prestamoConPagos.setNroDocumento(prestamo.getCliente().getNroDocumento());
+                prestamoConPagos.setMonto(prestamo.getMonto());
+                prestamoConPagos.setInteres(prestamo.getInteres());
+                prestamoConPagos.setPlazo(prestamo.getPlazo());
+                prestamoConPagos.setFechaCreacion(prestamo.getFechaCreacion());
+                prestamoConPagos.setEstado(prestamo.getEstado());
+                prestamoConPagos.setCronogramaPagos(pagosPendientes);
+                
+                prestamosConPagos.add(prestamoConPagos);
             }
         }
 
-        return prestamosConPagosPendientes;
+        return prestamosConPagos;
     }
 
 
-    public void eliminarPrestamo(Long id) {
+    public void eliminarPrestamo(Long id) throws Exception {
         Prestamo prestamo = prestamoJpaService.findById(id)
                 .orElseThrow(() -> new Exception("Préstamo no encontrado con id: " + id));
         prestamoJpaService.delete(prestamo);

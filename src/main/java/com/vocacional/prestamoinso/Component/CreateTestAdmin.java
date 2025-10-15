@@ -2,18 +2,19 @@ package com.vocacional.prestamoinso.Component;
 
 import com.vocacional.prestamoinso.Entity.User;
 import com.vocacional.prestamoinso.Entity.enums.ERole;
-import com.vocacional.prestamoinso.Service.UserSupabaseService;
+import com.vocacional.prestamoinso.Service.UserJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import java.util.Optional;
 
 @Component
 @Order(10) // Ejecutar después de otros componentes
 public class CreateTestAdmin implements CommandLineRunner {
 
     @Autowired
-    private UserSupabaseService userSupabaseService;
+    private UserJpaService userJpaService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -21,8 +22,8 @@ public class CreateTestAdmin implements CommandLineRunner {
             System.out.println("=== CREANDO USUARIO ADMINISTRADOR DE PRUEBA ===");
             
             // Verificar si ya existe el usuario testadmin
-            User existingUser = userSupabaseService.findByUsername("testadmin");
-            if (existingUser != null) {
+            Optional<User> existingUserOptional = userJpaService.findByUsername("testadmin");
+            if (existingUserOptional.isPresent()) {
                 System.out.println("❌ El usuario 'testadmin' ya existe. Saltando creación.");
                 return;
             }
@@ -37,7 +38,7 @@ public class CreateTestAdmin implements CommandLineRunner {
             testAdmin.setRole(ERole.ADMIN);
             
             // Guardar el usuario
-            User savedUser = userSupabaseService.save(testAdmin);
+            User savedUser = userJpaService.save(testAdmin);
             
             if (savedUser != null) {
                 System.out.println("✅ Usuario administrador de prueba creado exitosamente:");

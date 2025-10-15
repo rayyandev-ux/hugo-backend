@@ -1,5 +1,6 @@
 package com.vocacional.prestamoinso.Controller;
 
+import com.vocacional.prestamoinso.DTO.PrestamoConPagosDTO;
 import com.vocacional.prestamoinso.DTO.PrestamoDTO;
 import com.vocacional.prestamoinso.DTO.ReniecResponseDTO;
 import com.vocacional.prestamoinso.DTO.SunatResponseDTO;
@@ -159,7 +160,7 @@ public class PrestamoController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminarPrestamo(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarPrestamo(@PathVariable Long id) throws Exception {
         prestamoService.eliminarPrestamo(id);
         return ResponseEntity.ok().build();
     }
@@ -181,7 +182,7 @@ public class PrestamoController {
 
 
     @GetMapping("/prestamos-pendientes")
-    public List<Prestamo> obtenerPrestamosPendientes() {
-        return prestamoService.listarPrestamosPendientes();
+    public List<PrestamoConPagosDTO> obtenerPrestamosPendientes() {
+        return prestamoService.obtenerPrestamosConPagos();
     }
 }
