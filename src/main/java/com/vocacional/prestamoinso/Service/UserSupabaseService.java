@@ -71,17 +71,44 @@ public class UserSupabaseService {
             // Primero intentar con Supabase API
             User user = supabaseService.findByField(TABLE_NAME, "username", username, User.class);
             
-            // Si el usuario existe pero no tiene password, usar JdbcTemplate
+            // Si el usuario existe pero no tiene password, intentar obtenerlo con consulta específica
             if (user != null && user.getPassword() == null) {
-                logger.info("Password filtrado por RLS, usando JdbcTemplate para obtener password completo");
+                logger.info("Password filtrado por RLS, intentando consulta específica de password");
                 
-                String query = "SELECT id, nombre, apellido, username, email, password, role, reset_password_token, created_at, updated_at FROM users WHERE username = ?";
-                List<Map<String, Object>> results = jdbcTemplate.queryForList(query, username);
+                try {
+                    // Intentar obtener solo el campo password con una consulta específica
+                    String passwordResult = supabaseService.select(TABLE_NAME, "password", "username=eq." + username);
+                    if (passwordResult != null && !passwordResult.trim().equals("[]")) {
+                        // Parsear el resultado JSON para obtener el password
+                        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                        com.fasterxml.jackson.databind.JsonNode jsonArray = mapper.readTree(passwordResult);
+                        if (jsonArray.isArray() && jsonArray.size() > 0) {
+                            com.fasterxml.jackson.databind.JsonNode firstResult = jsonArray.get(0);
+                            if (firstResult.has("password") && !firstResult.get("password").isNull()) {
+                                user.setPassword(firstResult.get("password").asText());
+                                logger.info("Password obtenido exitosamente desde consulta específica de Supabase");
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.warn("No se pudo obtener password con consulta específica: {}", e.getMessage());
+                }
                 
-                if (!results.isEmpty()) {
-                    Map<String, Object> row = results.get(0);
-                    user.setPassword((String) row.get("password"));
-                    logger.info("Password obtenido exitosamente desde base de datos directa");
+                // Si aún no tenemos password y JdbcTemplate está disponible, usarlo como último recurso
+                if (user.getPassword() == null && jdbcTemplate != null) {
+                    try {
+                        logger.info("Usando JdbcTemplate como último recurso para obtener password");
+                        String query = "SELECT id, nombre, apellido, username, email, password, role, reset_password_token, created_at, updated_at FROM users WHERE username = ?";
+                        List<Map<String, Object>> results = jdbcTemplate.queryForList(query, username);
+                        
+                        if (!results.isEmpty()) {
+                            Map<String, Object> row = results.get(0);
+                            user.setPassword((String) row.get("password"));
+                            logger.info("Password obtenido exitosamente desde base de datos directa");
+                        }
+                    } catch (Exception e) {
+                        logger.warn("JdbcTemplate no disponible o falló: {}", e.getMessage());
+                    }
                 }
             }
             
